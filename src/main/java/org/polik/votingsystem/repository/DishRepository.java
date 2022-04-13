@@ -2,6 +2,7 @@ package org.polik.votingsystem.repository;
 
 import org.polik.votingsystem.model.Dish;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +23,12 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Query("from Dish d where d.date=current_date")
     List<Dish> findAll();
 
-    @Query("from Dish d where d.id=?1 and d.restaurant.id=?2")
-    Dish findByIdAndRestaurantId(int id, int restaurantId);
-
     @Override
     @Transactional
     <S extends Dish> S save(S entity);
 
-
-
+    @Modifying
     @Transactional
-    void deleteById(int id);
+    @Query("delete from Dish d where d.id=?1")
+    int deleteById(int id);
 }

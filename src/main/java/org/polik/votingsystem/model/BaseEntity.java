@@ -1,5 +1,6 @@
 package org.polik.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public abstract class BaseEntity implements Persistable<Integer> {
     }
 
     @Override
+    @JsonIgnore
     public boolean isNew() {
         return id == null;
     }

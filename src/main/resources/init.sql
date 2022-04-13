@@ -49,12 +49,16 @@ CREATE TABLE votes
 );
 
 INSERT INTO users(username, password, email)
-VALUES ('admin', '$2a$10$geT6B49hxUWBzilJbr/O6OETJv3jb/BFr1EebD1P9k.74lsfQ8bze', 'admin@gmail.com'),
-       ('ye', '$2a$10$14RDmSZ5IC1QH8NWhTgea.JppG.KCtYxyet9yQVZf3n0edPlBoJgC', 'ye@gmail.com');
+VALUES ('admin', '{noop}admin', 'admin@gmail.com'),
+       ('ye', '{noop}kanye', 'ye@gmail.com'),
+       ('superuser', '{noop}super', 'super@gmail.com'),
+       ('guest', '{noop}guest', 'guest@gmail.com');
 
 INSERT INTO user_roles(role, user_id)
 VALUES ('ADMIN', 1),
-       ('USER', 2);
+       ('USER', 2),
+       ('USER', 3),
+       ('USER', 4);
 
 INSERT INTO restaurant(name)
 VALUES ('Macdonalds'),

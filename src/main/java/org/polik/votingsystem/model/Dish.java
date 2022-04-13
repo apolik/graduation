@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,7 +18,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-@DynamicUpdate
 @NoArgsConstructor
 public class Dish extends BaseEntity {
     @Column(name = "name")
@@ -42,5 +40,12 @@ public class Dish extends BaseEntity {
         super(id);
         this.name = name;
         this.price = price;
+    }
+
+    public Dish(Integer id, String name, Integer price, Restaurant restaurant) {
+        super.id = id;
+        this.name = name;
+        this.price = price;
+        this.restaurant = restaurant;
     }
 }

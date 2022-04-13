@@ -1,7 +1,7 @@
-package org.polik.votingsystem.rest.dish;
+package org.polik.votingsystem.web.dish;
 
-import org.polik.votingsystem.service.DishService;
 import org.polik.votingsystem.to.DishTo;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,22 +13,17 @@ import java.util.List;
  * Created by Polik on 3/29/2022
  */
 @RestController
-@RequestMapping(DishController.REST_URL)
-public class DishController {
+@RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class DishController extends AbstractDishController {
     public static final String REST_URL = "/rest/dishes";
-    private final DishService service;
 
-    public DishController(DishService service) {
-        this.service = service;
-    }
-
-    @GetMapping({"{restaurantId}", "{restaurantId}/"})
+    @GetMapping("/{restaurantId}")
     public List<DishTo> getAll(@PathVariable int restaurantId) {
-        return service.getAll(restaurantId);
+        return super.getAll(restaurantId);
     }
 
-    @GetMapping()
+    @GetMapping
     public List<DishTo> getAll() {
-        return service.getAll();
+        return super.getAll();
     }
 }

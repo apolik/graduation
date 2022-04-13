@@ -1,11 +1,13 @@
 package org.polik.votingsystem.util;
 
+import lombok.experimental.UtilityClass;
 import org.polik.votingsystem.model.BaseEntity;
 import org.polik.votingsystem.util.exception.NotFoundException;
 
 /**
  * Created by Polik on 4/9/2022
  */
+@UtilityClass
 public class ValidationUtil {
     public static void assureIdConsistent(BaseEntity entity, int id) {
         if (entity.isNew()) {
@@ -22,5 +24,7 @@ public class ValidationUtil {
             return obj;
     }
 
-
+    public static void checkNotFoundWithId(boolean found, int id) {
+        checkNotFound(found, "id=" + id);
+    }
 }

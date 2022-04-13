@@ -3,6 +3,7 @@ package org.polik.votingsystem.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,7 @@ public class User extends BaseEntity {
     private String password;
 
     @Column(name = "email")
+    @Email
     private String email;
 
     @Column(name = "role")

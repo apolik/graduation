@@ -6,7 +6,7 @@ import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.repository.DishRepository;
 import org.polik.votingsystem.repository.RestaurantRepository;
 import org.polik.votingsystem.to.DishTo;
-import org.polik.votingsystem.util.ValidationUtil;
+import org.polik.votingsystem.util.VoteUtil;
 import org.polik.votingsystem.util.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,38 +32,35 @@ public class DishService {
 
     public List<DishTo> getAll(int restaurantId) {
         log.info("getAll {}", restaurantId);
-        return getTos(repository.findAllByRestaurantId(restaurantId));
+        return createTos(repository.findAllByRestaurantId(restaurantId));
     }
 
     public List<DishTo> getAll() {
         log.info("getAll");
-        return getTos(repository.findAll());
+        return createTos(repository.findAll());
     }
 
     @Transactional
     public DishTo create(DishTo dishTo, int restaurantId) {
+        log.info("create {} {}", dishTo, restaurantId);
         Dish dish = fromTo(dishTo);
 
-        dish.setRestaurant(getRestaurantById(restaurantId));
-        log.info("create {} {}", dish, restaurantId);
+        dish.setRestaurant(
+                getRestaurantById(restaurantId)
+        );
 
-        return getTo(repository.save(dish));
+        return createTo(repository.save(dish));
     }
 
     @Transactional
     public void update(DishTo dishTo, int id) {
-        Dish dish = new Dish();
-        ValidationUtil.assureIdConsistent(dish, id);
-
-        dish.setName(dishTo.getName());
-        dish.setPrice(dishTo.getPrice());
-        dish.setRestaurant(
-                getRestaurantById(dishTo.getRestaurantId())
-        );
-
         log.info("update {} {}", dishTo, id);
 
-        repository.save(dish);
+        repository.save(fromTo(
+                id,
+                dishTo,
+                getRestaurantById(dishTo.getRestaurantId())
+        ));
     }
 
     private Restaurant getRestaurantById(int id) {
@@ -73,8 +70,8 @@ public class DishService {
         );
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         log.info("delete {}", id);
-        repository.deleteById(id);
+        return repository.deleteById(id) != 0;
     }
 }

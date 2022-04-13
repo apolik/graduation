@@ -1,6 +1,8 @@
 package org.polik.votingsystem.util;
 
+import lombok.experimental.UtilityClass;
 import org.polik.votingsystem.model.Dish;
+import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.to.DishTo;
 
 import java.util.List;
@@ -8,14 +10,15 @@ import java.util.List;
 /**
  * Created by Polik on 4/10/2022
  */
+@UtilityClass
 public class DishUtil {
-    public static List<DishTo> getTos(List<Dish> dishes) {
+    public static List<DishTo> createTos(List<Dish> dishes) {
         return dishes.stream()
-                .map(DishUtil::getTo)
+                .map(DishUtil::createTo)
                 .toList();
     }
 
-    public static DishTo getTo(Dish dish) {
+    public static DishTo createTo(Dish dish) {
         return new DishTo(
                 dish.getId(),
                 dish.getName(),
@@ -30,11 +33,12 @@ public class DishUtil {
                 dishTo.getPrice());
     }
 
-    public static void updateNotNullFields(Dish old, DishTo newDish) {
-        if (newDish.getName() != null)
-            old.setName(newDish.getName());
-
-        if (newDish.getPrice() != null)
-            old.setPrice(newDish.getPrice());
+    public static Dish fromTo(int id, DishTo dishTo, Restaurant restaurant) {
+        return new Dish(
+                id,
+                dishTo.getName(),
+                dishTo.getPrice(),
+                restaurant
+        );
     }
 }

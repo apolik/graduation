@@ -3,8 +3,11 @@ package org.polik.votingsystem.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.polik.votingsystem.to.VoteTo;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,15 +22,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Vote extends BaseEntity {
     @Column(name = "date")
-    private LocalDate date = LocalDate.now();
+    @CreationTimestamp
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 }
