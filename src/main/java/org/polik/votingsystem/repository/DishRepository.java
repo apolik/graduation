@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -19,6 +20,10 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Query("from Dish d where d.restaurant.id=?1 and d.date=current_date")
     List<Dish> findAllByRestaurantId(int restaurantId);
 
+    List<Dish> findAllByDate(LocalDate date);
+
+    List<Dish> findAllByDateAndRestaurantId(LocalDate date, int restaurantId);
+
     @Override
     @Query("from Dish d where d.date=current_date")
     List<Dish> findAll();
@@ -30,5 +35,5 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Modifying
     @Transactional
     @Query("delete from Dish d where d.id=?1")
-    int deleteById(int id);
+    int delete(int id);
 }

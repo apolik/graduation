@@ -1,12 +1,15 @@
 package org.polik.votingsystem.repository;
 
 import org.polik.votingsystem.model.Vote;
+import org.polik.votingsystem.util.DateTimeUtil;
+import org.polik.votingsystem.util.exception.TimeForRevotingIsExpiredException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -21,7 +24,15 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Transactional
     @Modifying
     @Query("update Vote v set v.restaurant.id=?1 where v.user.id=?2 and v.date=current_date")
-    int revote(int restaurantId, int userId);
+    void update(int restaurantId, int userId);
+
+    default void revote(int restaurantId, int userId) {
+        if (DateTimeUtil.isBefore(LocalTime.now(), 11)) {
+            update(restaurantId, userId);
+        } else {
+            throw new TimeForRevotingIsExpiredException("You cannot change your mind after 11 PM");
+        }
+    }
 
     List<Vote> findAllByDate(LocalDate date);
 }

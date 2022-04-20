@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController extends AbstractVoteController {
-    public static final String REST_URL = "/rest/voting";
+    public static final String REST_URL = "/api/voting";
 
     @Override
     @GetMapping
@@ -24,18 +24,16 @@ public class VoteController extends AbstractVoteController {
         return super.getAll();
     }
 
-    @Override
     @PostMapping("/{id}")
     public Vote vote(@PathVariable int id,
                      @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        return super.vote(id, authorizedUser);
+        return super.vote(id, authorizedUser.getUser());
     }
 
-    @Override
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void revote(@PathVariable int id,
                        @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        super.revote(id, authorizedUser);
+        super.revote(id, authorizedUser.getId());
     }
 }

@@ -15,15 +15,15 @@ import java.util.List;
 @RestController
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class DishController extends AbstractDishController {
-    public static final String REST_URL = "/rest/dishes";
-
-    @GetMapping("/{restaurantId}")
-    public List<DishTo> getAll(@PathVariable int restaurantId) {
-        return super.getAll(restaurantId);
-    }
+    public static final String REST_URL = "/api/dishes";
 
     @GetMapping
     public List<DishTo> getAll() {
         return super.getAll();
+    }
+
+    @GetMapping("/{restaurantId}")
+    public List<DishTo> getAllByRestaurantId(@PathVariable int restaurantId) {
+        return super.getAllByRestaurantId(restaurantId);
     }
 }

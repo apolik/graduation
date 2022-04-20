@@ -28,9 +28,7 @@ public class DateTimeUtil {
         return StringUtils.hasLength(str) ? LocalDateTime.parse(str) : null;
     }
 
-    public static void isTimeForRevoteExpired() {
-        if (LocalTime.now().getHour() >= 11) {
-            throw new IllegalArgumentException("You cannot revote after 11 PM");
-        }
+    public static boolean isBefore(LocalTime time, int hour) {
+        return time.getHour() < hour;
     }
 }

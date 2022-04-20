@@ -3,9 +3,11 @@ package org.polik.votingsystem.web.dish;
 import org.polik.votingsystem.to.DishTo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -14,18 +16,21 @@ import java.util.List;
 @RestController
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminDishController extends AbstractDishController {
-    public static final String REST_URL = "/rest/admin/dishes";
+    public static final String REST_URL = "/api/admin/dishes";
 
-    @Override
-    @GetMapping("/{restaurantId}")
-    public List<DishTo> getAll(@PathVariable int restaurantId) {
-        return super.getAll(restaurantId);
+    @GetMapping
+    public List<DishTo> getAllByDate(@RequestParam @Nullable LocalDate date) {
+        return date == null ?
+                super.getAll() :
+                super.getAllByDate(date);
     }
 
-    @Override
-    @GetMapping
-    public List<DishTo> getAll() {
-        return super.getAll();
+    @GetMapping("/{restaurantId}")
+    public List<DishTo> getAllByDateAndRestaurantId(@RequestParam @Nullable LocalDate date,
+                                                    @PathVariable int restaurantId) {
+        return date == null ?
+                super.getAllByRestaurantId(restaurantId) :
+                super.getAllByDateAndRestaurantId(date, restaurantId);
     }
 
     @Override

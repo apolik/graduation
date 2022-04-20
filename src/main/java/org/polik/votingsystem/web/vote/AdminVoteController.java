@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = AdminVoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminVoteController extends AbstractVoteController {
-    public static final String REST_URL = "rest/admin/voting";
+    public static final String REST_URL = "api/admin/voting";
 
     @Override
     @GetMapping
@@ -27,22 +27,20 @@ public class AdminVoteController extends AbstractVoteController {
 
     @Override
     @GetMapping("/history")
-    public List<VoteTo> getAll(@RequestParam LocalDate date) {
-        return super.getAll(date);
+    public List<VoteTo> getAllByDate(@RequestParam LocalDate date) {
+        return super.getAllByDate(date);
     }
 
-    @Override
     @PostMapping("/{id}")
     public Vote vote(@PathVariable int id,
                      @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        return super.vote(id, authorizedUser);
+        return super.vote(id, authorizedUser.getUser());
     }
 
-    @Override
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void revote(@PathVariable int id,
                        @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        super.revote(id, authorizedUser);
+        super.revote(id, authorizedUser.getId());
     }
 }
