@@ -1,5 +1,6 @@
 package org.polik.votingsystem.web.converter;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.format.Formatter;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import static org.polik.votingsystem.util.DateTimeUtil.*;
 /**
  * Created by Polik on 4/11/2022
  */
+@UtilityClass
 public class DateTimeFormatters {
     public static class LocalDateFormatter implements Formatter<LocalDate> {
 

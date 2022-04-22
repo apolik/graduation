@@ -29,6 +29,6 @@ public class VoteUtil {
     }
 
     public static VoteTo createTo(Restaurant restaurant, Integer votes) {
-        return new VoteTo(restaurant, votes);
+        return new VoteTo(restaurant.getId(), votes);
     }
 }

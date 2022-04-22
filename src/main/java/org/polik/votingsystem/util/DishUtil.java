@@ -5,6 +5,7 @@ import org.polik.votingsystem.model.Dish;
 import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.to.DishTo;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  */
 @UtilityClass
 public class DishUtil {
-    public static List<DishTo> createTos(List<Dish> dishes) {
+    public static List<DishTo> createTos(Collection<Dish> dishes) {
         return dishes.stream()
                 .map(DishUtil::createTo)
                 .toList();

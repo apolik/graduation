@@ -9,7 +9,6 @@ import org.polik.votingsystem.util.validation.ValidationUtil;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -22,7 +21,7 @@ import static org.polik.votingsystem.util.exception.ErrorType.DATA_NOT_FOUND;
  * Created by Polik on 3/27/2022
  */
 @Slf4j
-@ControllerAdvice
+//@ControllerAdvice todo:
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)

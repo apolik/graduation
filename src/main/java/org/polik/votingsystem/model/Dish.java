@@ -1,5 +1,6 @@
 package org.polik.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +20,7 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Dish extends BaseEntity {
-    @Column(name = "name")
-    @NotNull
-    private String name;
+public class Dish extends NamedEntity {
 
     @Column(name = "price")
     @NotNull
@@ -30,6 +28,7 @@ public class Dish extends BaseEntity {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @JsonBackReference
     private Restaurant restaurant;
 
     @Column(name = "date", updatable = false)
@@ -37,8 +36,7 @@ public class Dish extends BaseEntity {
     private LocalDate date;
 
     public Dish(Integer id, String name, Integer price) {
-        super(id);
-        this.name = name;
+        super(id, name);
         this.price = price;
     }
 

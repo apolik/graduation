@@ -1,19 +1,14 @@
 package org.polik.votingsystem.to;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.polik.votingsystem.model.Restaurant;
+import lombok.Value;
 
 /**
  * Created by Polik on 4/11/2022
  */
-@Getter
-@Setter
-@NoArgsConstructor
+@Value
 @AllArgsConstructor
 public class VoteTo {
-    private Restaurant restaurant;
-    private Integer votes;
+    Integer restaurantId;
+    Integer votes;
 }

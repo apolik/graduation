@@ -18,7 +18,6 @@ import java.util.Optional;
 
 import static org.polik.votingsystem.util.DishUtil.createTo;
 import static org.polik.votingsystem.util.DishUtil.fromTo;
-import static org.polik.votingsystem.util.validation.ValidationUtil.checkNotFoundWithId;
 
 /**
  * Created by Polik on 4/11/2022
@@ -76,7 +75,7 @@ public abstract class AbstractDishController {
 
     public void delete(int id) {
         log.info("delete {}", id);
-        checkNotFoundWithId(repository.delete(id) != 0, id);
+        repository.deleteExisted(id);
     }
 
     private Restaurant getRestaurant(int id) {

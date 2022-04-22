@@ -13,6 +13,7 @@ import static org.polik.votingsystem.util.validation.ValidationUtil.checkModific
  */
 @NoRepositoryBean
 public interface BaseRepository<T> extends JpaRepository<T, Integer> {
+
     @Transactional
     @Modifying
     @Query("DELETE FROM #{#entityName} u WHERE u.id=:id")

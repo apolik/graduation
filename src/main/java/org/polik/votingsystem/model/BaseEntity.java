@@ -23,7 +23,7 @@ public abstract class BaseEntity implements Persistable<Integer>, HasId {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
-    public BaseEntity(Integer id) {
+    protected BaseEntity(Integer id) {
         this.id = id;
     }
 

@@ -9,15 +9,11 @@ import org.polik.votingsystem.HasId;
 /**
  * Created by Polik on 4/15/2022
  */
+@Data
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
 public abstract class BaseTo implements HasId {
     protected Integer id;
-
-    public boolean isNew() {
-        return id == null;
-    }
 
     @Override
     public String toString() {

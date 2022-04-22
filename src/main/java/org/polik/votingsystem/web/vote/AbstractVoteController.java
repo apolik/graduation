@@ -32,7 +32,7 @@ public abstract class AbstractVoteController {
 
     public List<VoteTo> getAllByDate(LocalDate date) {
         log.info("getAll");
-        return VoteUtil.getTos(repository.findAllByDate(LocalDate.now()));
+        return VoteUtil.getTos(repository.findAllByDate(date));
     }
 
     @Transactional

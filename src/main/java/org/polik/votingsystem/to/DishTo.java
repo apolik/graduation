@@ -1,7 +1,8 @@
 package org.polik.votingsystem.to;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
@@ -11,21 +12,27 @@ import javax.validation.constraints.Size;
 /**
  * Created by Polik on 4/10/2022
  */
-@Data
+@Value
 @AllArgsConstructor
-public class DishTo {
-
-    private Integer id;
-
+@NotBlank
+@EqualsAndHashCode(callSuper = true)
+public class DishTo extends BaseTo {
     @NotNull
     @NotBlank
     @Size(min = 4, max = 50, message = "length must be between 4 and 50 characters")
-    private String name;
+    String name;
 
     @NotNull
     @Range(min = 100, max = 10000, message = "Price should be between 100 and 10000")
-    private Integer price;
+    Integer price;
 
     @NotNull
-    private Integer restaurantId;
+    Integer restaurantId;
+
+    public DishTo(Integer id, String name, Integer price, Integer restaurantId) {
+        super(id);
+        this.name = name;
+        this.price = price;
+        this.restaurantId = restaurantId;
+    }
 }
