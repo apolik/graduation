@@ -65,4 +65,8 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
         this.email = email;
         this.roles = roles;
     }
+
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getPassword(), u.getEmail(), u.getRoles());
+    }
 }

@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalTime;
 
 import static org.polik.votingsystem.RestaurantTestData.restaurant2;
-import static org.polik.votingsystem.UserTestData.kanye;
+import static org.polik.votingsystem.web.user.UserTestData.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class VoteControllerTest extends AbstractControllerTest {
@@ -19,14 +19,14 @@ class VoteControllerTest extends AbstractControllerTest {
     @Test
     public void getConflict() throws Exception {
         perform(MockMvcRequestBuilders.post(REST_URL + restaurant2)
-                .with(TestUtil.userHttpBasic(kanye)))
+                .with(TestUtil.userHttpBasic(user)))
                 .andExpect(status().isConflict());
     }
 
     @Test
     public void revote() throws Exception {
         perform(MockMvcRequestBuilders.put(REST_URL + restaurant2)
-                .with(TestUtil.userHttpBasic(kanye)))
+                .with(TestUtil.userHttpBasic(user)))
                 .andExpect(DateTimeUtil.isBefore(LocalTime.now(), 11) ?
                         status().isOk() :
                         status().isConflict()

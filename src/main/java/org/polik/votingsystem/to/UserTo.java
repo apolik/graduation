@@ -3,6 +3,7 @@ package org.polik.votingsystem.to;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
+import org.polik.votingsystem.HasIdAndEmail;
 import org.polik.votingsystem.util.validation.NoHtml;
 
 import javax.validation.constraints.Email;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Size;
 @Value
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class UserTo extends NamedTo {
+public class UserTo extends NamedTo implements HasIdAndEmail {
     @Email
     @NotBlank
     @Size(max = 100)

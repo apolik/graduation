@@ -15,7 +15,7 @@ public class UserUtil {
     public static final PasswordEncoder PASSWORD_ENCODER = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     public static User createNewFromTo(UserTo userTo) {
-        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), Role.USER);
+        return new User(null, userTo.getName(), userTo.getPassword(), userTo.getEmail().toLowerCase(), Role.USER);
     }
 
     public static User updateFromTo(User user, UserTo userTo) {

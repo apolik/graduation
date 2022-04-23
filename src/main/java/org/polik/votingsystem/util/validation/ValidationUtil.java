@@ -17,7 +17,7 @@ public class ValidationUtil {
         if (entity.isNew()) {
             entity.setId(id);
         } else if (entity.getId() != id) {
-            throw new IllegalArgumentException(entity + " must be with id=" + id);
+            throw new IllegalRequestDataException(entity + " must be with id=" + id);
         }
     }
 
