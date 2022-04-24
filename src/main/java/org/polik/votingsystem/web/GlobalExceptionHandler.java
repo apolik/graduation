@@ -3,6 +3,7 @@ package org.polik.votingsystem.web;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.polik.votingsystem.error.AppException;
 import org.polik.votingsystem.util.validation.ValidationUtil;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -31,6 +32,8 @@ import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.M
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
+    public static final String EXCEPTION_DUPLICATE_VOTE = "You cannot vote more than once a day";
+    public static final String EXCEPTION_EXPIRED_TIME = "You cannot change your mind after 11 PM";
 
     private final ErrorAttributes errorAttributes;
 
@@ -49,11 +52,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleBindingErrors(ex.getBindingResult(), request);
     }
 
-//    @ExceptionHandler(AppException.class)
-//    public ResponseEntity<?> appException(WebRequest request, AppException ex) {
-//        log.error("ApplicationException: {}", ex.getMessage());
-//        return createResponseEntity(getDefaultBody(request, ex.getOptions(), null), ex.getStatus());
-//    }
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<?> appException(WebRequest request, AppException ex) {
+        log.error("ApplicationException: {}", ex.getMessage());
+        return createResponseEntity(getDefaultBody(request, ex.getOptions(), null), ex.getStatus());
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> persistException(WebRequest request, EntityNotFoundException ex) {

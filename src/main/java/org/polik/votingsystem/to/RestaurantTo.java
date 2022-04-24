@@ -4,8 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
 
-import java.util.Set;
-
 /**
  * Created by Polik on 4/21/2022
  */
@@ -13,10 +11,10 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class RestaurantTo extends NamedTo {
-    Set<DishTo> dishes;
+    int votes;
 
-    public RestaurantTo(Integer id, String name, Set<DishTo> dishes) {
+    public RestaurantTo(Integer id, String name, int votes) {
         super(id, name);
-        this.dishes = dishes;
+        this.votes = votes;
     }
 }

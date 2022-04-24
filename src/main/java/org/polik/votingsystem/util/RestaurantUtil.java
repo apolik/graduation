@@ -5,8 +5,8 @@ import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.to.RestaurantTo;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Polik on 4/21/2022
@@ -16,10 +16,11 @@ public class RestaurantUtil {
     public static List<RestaurantTo> getTos(Collection<Restaurant> restaurants) {
         return restaurants.stream()
                 .map(RestaurantUtil::createTo)
+                .sorted(Comparator.comparingInt(RestaurantTo::getVotes).reversed())
                 .toList();
     }
 
     public static RestaurantTo createTo(Restaurant restaurant) {
-        return new RestaurantTo(restaurant.getId(), restaurant.getName(), Set.copyOf(DishUtil.createTos(restaurant.getDishes())));
+        return new RestaurantTo(restaurant.getId(), restaurant.getName(), restaurant.getVotes().size());
     }
 }

@@ -1,11 +1,11 @@
 package org.polik.votingsystem.web.restaurant;
 
 import lombok.extern.slf4j.Slf4j;
+import org.polik.votingsystem.error.IllegalRequestDataException;
 import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.repository.RestaurantRepository;
 import org.polik.votingsystem.to.RestaurantTo;
 import org.polik.votingsystem.util.RestaurantUtil;
-import org.polik.votingsystem.util.exception.NotFoundException;
 import org.polik.votingsystem.util.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,13 +23,13 @@ public abstract class AbstractRestaurantController {
 
     public List<RestaurantTo> getAll() {
         log.info("getAll");
-        return getTos(repository.findAllForCurrentDate());
+        return getTos(repository.findAll()); //fixme
     }
 
     public RestaurantTo get(int id) {
         log.info("getById {}", id);
         return RestaurantUtil.createTo(repository.findById(id).orElseThrow(
-                () -> new NotFoundException("No such restaurant with id: " + id)
+                () -> new IllegalRequestDataException("No such restaurant with id: " + id)
         ));
     }
 

@@ -12,7 +12,13 @@ import java.util.Set;
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
-//    @Query("select distinct r from Restaurant r left join fetch r.dishes d where d.date=current_date")
-    @Query("from Restaurant r join fetch r.dishes d where d.date=current_date order by r.name")
+//    @Query("select r from Restaurant r join r.votes v where v.date=current_date")
+//    @Query("from Restaurant r left join  r.votes v where v.date=current_date")
+//    @Query("select r from Restaurant r join fetch Vote v on v.date=current_date")
+//    Set<Restaurant> findAllForCurrentDate();
+
+//    @Query("from Restaurant r left join fetch r.votes as v on v.date=current_date")
+
+    @Query("from Restaurant r left outer join fetch r.votes as v where v.date=current_date")
     Set<Restaurant> findAllForCurrentDate();
 }

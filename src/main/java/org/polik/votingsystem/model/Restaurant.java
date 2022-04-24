@@ -7,24 +7,22 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
  * Created by Polik on 3/11/2022
  */
 @Entity
-@Table(name = "restaurant")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
+@Table(name = "restaurant", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Restaurant extends NamedEntity {
-    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
-    private Set<Dish> dishes;
+    private Set<Vote> votes;
 
     public Restaurant(Integer id, String name) {
         this.id = id;

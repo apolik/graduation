@@ -52,13 +52,15 @@ INSERT INTO USERS(name, password, email)
 VALUES ('admin', '{noop}admin', 'admin@gmail.com'),
        ('ye', '{noop}kanye', 'ye@gmail.com'),
        ('superuser', '{noop}super', 'super@gmail.com'),
-       ('guest', '{noop}guest', 'guest@gmail.com');
+       ('guest', '{noop}guest', 'guest@gmail.com'),
+       ('test', '{noop}testuser', 'test@gmail.com');
 
 INSERT INTO USER_ROLES(role, user_id)
 VALUES ('ADMIN', 1),
        ('USER', 2),
        ('USER', 3),
-       ('USER', 4);
+       ('USER', 4),
+       ('USER', 5);
 
 INSERT INTO RESTAURANT(name)
 VALUES ('Macdonalds'),
@@ -75,10 +77,6 @@ VALUES (1, 1, '2022-03-10'),
        (2, 2, '2022-03-11'),
        (2, 3, '2022-03-11'),
        (4, 4, '2022-03-11'),
-       (1, 1, '2022-03-12'),
-       (1, 2, '2022-03-12'),
-       (4, 3, '2022-03-12'),
-       (3, 4, '2022-03-12'),
        (2, 1, CURRENT_DATE),
        (3, 2, CURRENT_DATE),
        (4, 3, CURRENT_DATE),
@@ -98,12 +96,6 @@ VALUES ('Блинчики', 7443, '2022-03-10', 1),
        ('Best dish1', 250, '2022-03-11', 4),
        ('Блинчики', 750, '2022-03-11', 1),
        ('Чашечка чая', 1984, '2022-03-11', 3),
-       ('Чашечка ромашкового чая', 1337, '2022-03-12', 2),
-       ('Оладушки', 1000, '2022-03-12', 2),
-       ('Я устал придумывать блюда', 2500, '2022-03-12', 4),
-       ('Кока кола', 500, '2022-03-12', 3),
-       ('Чашечка фруктового чая', 300, '2022-03-12', 3),
-       ('Мандариновый сок', 2789, '2022-03-12', 2),
        ('Шашлык', 3785, CURRENT_DATE, 2),
        ('Хлебушек с блинчиками', 250, CURRENT_DATE, 4),
        ('Блинчики с лепешкой', 750, CURRENT_DATE, 1),

@@ -2,8 +2,7 @@ package org.polik.votingsystem.util.validation;
 
 import lombok.experimental.UtilityClass;
 import org.polik.votingsystem.HasId;
-import org.polik.votingsystem.util.exception.IllegalRequestDataException;
-import org.polik.votingsystem.util.exception.NotFoundException;
+import org.polik.votingsystem.error.IllegalRequestDataException;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 
@@ -12,6 +11,7 @@ import org.springframework.lang.NonNull;
  */
 @UtilityClass
 public class ValidationUtil {
+    public static final int LAST_HOUR_FOR_REVOTING = 11;
 
     public static void assureIdConsistent(HasId entity, int id) {
         if (entity.isNew()) {
@@ -23,7 +23,7 @@ public class ValidationUtil {
 
     public static <T> T checkNotFound(T obj, String message) {
         if (obj == null)
-            throw new NotFoundException("Not found entity with " + message);
+            throw new IllegalRequestDataException("Not found entity with " + message);
         else
             return obj;
     }
@@ -40,7 +40,7 @@ public class ValidationUtil {
 
     public static void checkNotFound(boolean found, String msg) {
         if (!found) {
-            throw new NotFoundException("Not found entity with " + msg);
+            throw new IllegalRequestDataException("Not found entity with " + msg);
         }
     }
 

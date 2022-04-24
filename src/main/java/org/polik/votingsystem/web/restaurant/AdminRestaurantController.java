@@ -7,10 +7,15 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
+
+import static org.polik.votingsystem.util.validation.ValidationUtil.checkNew;
 
 /**
  * Created by Polik on 4/7/2022
@@ -28,15 +33,20 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         return super.getAll();
     }
 
-    @Override
     @CacheEvict(allEntries = true)
-    @PostMapping
-    public Restaurant create(@RequestBody @Valid Restaurant restaurant) {
-        return super.create(restaurant);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Restaurant> createWithLocation(@RequestBody @Valid Restaurant restaurant) {
+        checkNew(restaurant);
+        super.create(restaurant);
+
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(restaurant.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(restaurant);
     }
 
     @Override
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody @Valid Restaurant restaurant,

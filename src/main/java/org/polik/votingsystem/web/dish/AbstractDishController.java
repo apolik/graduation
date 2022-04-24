@@ -1,13 +1,13 @@
 package org.polik.votingsystem.web.dish;
 
 import lombok.extern.slf4j.Slf4j;
+import org.polik.votingsystem.error.IllegalRequestDataException;
 import org.polik.votingsystem.model.Dish;
 import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.repository.DishRepository;
 import org.polik.votingsystem.repository.RestaurantRepository;
 import org.polik.votingsystem.to.DishTo;
 import org.polik.votingsystem.util.DishUtil;
-import org.polik.votingsystem.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,7 +81,7 @@ public abstract class AbstractDishController {
     private Restaurant getRestaurant(int id) {
         Optional<Restaurant> result = restaurantRepository.findById(id);
         return result.orElseThrow(
-                () -> new NotFoundException("No such restaurant with id: " + id)
+                () -> new IllegalRequestDataException("No such restaurant with id: " + id)
         );
     }
 }

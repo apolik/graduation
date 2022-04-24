@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.polik.votingsystem.model.User;
 import org.polik.votingsystem.repository.UserRepository;
 import org.polik.votingsystem.to.UserTo;
+import org.polik.votingsystem.util.JsonUtil;
 import org.polik.votingsystem.util.UserUtil;
 import org.polik.votingsystem.web.AbstractControllerTest;
 import org.polik.votingsystem.web.GlobalExceptionHandler;
-import org.polik.votingsystem.web.json.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -21,6 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Created by Polik on 4/23/2022
+ */
 class ProfileControllerTest extends AbstractControllerTest {
 
     @Autowired
@@ -46,7 +49,7 @@ class ProfileControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL))
                 .andExpect(status().isNoContent());
-        USER_MATCHER.assertMatch(userRepository.findAll(), admin, superUser, guest);
+        USER_MATCHER.assertMatch(userRepository.findAll(), admin, superUser, guest, test);
     }
 
     @Test

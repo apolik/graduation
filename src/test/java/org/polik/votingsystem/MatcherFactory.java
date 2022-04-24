@@ -1,6 +1,6 @@
 package org.polik.votingsystem;
 
-import org.polik.votingsystem.web.json.JsonUtil;
+import org.polik.votingsystem.util.JsonUtil;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;

@@ -1,6 +1,7 @@
 package org.polik.votingsystem.web.vote;
 
 import lombok.extern.slf4j.Slf4j;
+import org.polik.votingsystem.error.IllegalRequestDataException;
 import org.polik.votingsystem.model.User;
 import org.polik.votingsystem.model.Vote;
 import org.polik.votingsystem.repository.RestaurantRepository;
@@ -25,9 +26,14 @@ public abstract class AbstractVoteController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    public List<VoteTo> getAll() {
+    public List<VoteTo> getAllForToday() {
         log.info("getAll");
         return VoteUtil.getTos(repository.findAllByDate(LocalDate.now()));
+    }
+
+    public List<VoteTo> getAllForTodayByRestaurantId(int restaurantId) {
+        log.info("getAllForTodayByRestaurantId {}", restaurantId);
+        return VoteUtil.getTos(repository.findAllByDateAndRestaurant_Id(LocalDate.now(), restaurantId));
     }
 
     public List<VoteTo> getAllByDate(LocalDate date) {
@@ -42,11 +48,13 @@ public abstract class AbstractVoteController {
         Vote vote = new Vote();
 
         vote.setUser(user);
-        vote.setRestaurant(
-                restaurantRepository.getById(restaurantId)
+        vote.setRestaurant(restaurantRepository.findById(restaurantId)
+                .orElseThrow(
+                        () -> new IllegalRequestDataException("No such restaurant with id: " + restaurantId)
+                )
         );
 
-        return repository.save(vote);
+        return repository.vote(vote);
     }
 
     public void revote(int restaurantId, int userId) {
