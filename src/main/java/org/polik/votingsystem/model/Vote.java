@@ -1,5 +1,6 @@
 package org.polik.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +32,7 @@ public class Vote extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference
     private Restaurant restaurant;
 
     public Vote(Integer id, LocalDate date, User user, Restaurant restaurant) {

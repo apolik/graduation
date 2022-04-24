@@ -8,6 +8,7 @@ import org.polik.votingsystem.repository.DishRepository;
 import org.polik.votingsystem.repository.RestaurantRepository;
 import org.polik.votingsystem.to.DishTo;
 import org.polik.votingsystem.util.DishUtil;
+import org.polik.votingsystem.util.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.polik.votingsystem.util.DishUtil.createTo;
 import static org.polik.votingsystem.util.DishUtil.fromTo;
 
 /**
@@ -51,7 +51,7 @@ public abstract class AbstractDishController {
     }
 
     @Transactional
-    public DishTo create(DishTo dishTo) {
+    public Dish create(DishTo dishTo) {
         log.info("create {}", dishTo);
         Dish dish = fromTo(dishTo);
 
@@ -59,12 +59,13 @@ public abstract class AbstractDishController {
                 getRestaurant(dishTo.getRestaurantId())
         );
 
-        return createTo(repository.save(dish));
+        return repository.save(dish);
     }
 
     @Transactional
-    public void update(DishTo dishTo, int restaurantId) {
-        log.info("update {} {}", dishTo, restaurantId);
+    public void update(DishTo dishTo, int id) {
+        log.info("update {} {}", dishTo, id);
+        ValidationUtil.assureIdConsistent(dishTo, id);
 
         repository.save(fromTo(
                 dishTo.getId(),

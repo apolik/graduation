@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 import org.polik.votingsystem.MatcherFactory;
 import org.polik.votingsystem.model.Role;
 import org.polik.votingsystem.model.User;
-import org.polik.votingsystem.util.JsonUtil;
+import org.polik.votingsystem.web.json.JsonUtil;
 
 import java.util.Collections;
 

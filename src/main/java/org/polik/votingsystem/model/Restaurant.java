@@ -1,6 +1,7 @@
 package org.polik.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,12 +21,16 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 @Table(name = "restaurant", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
-public class Restaurant extends NamedEntity {
+public class Restaurant extends NamedEntity implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
-    private Set<Vote> votes;
+    private Set<Vote> votes = new HashSet<>();
 
     public Restaurant(Integer id, String name) {
         this.id = id;

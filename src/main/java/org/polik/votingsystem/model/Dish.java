@@ -8,7 +8,8 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -20,10 +21,11 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Dish extends NamedEntity {
+public class Dish extends NamedEntity implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "price")
-    @NotNull
     private Integer price;
 
     @ManyToOne(cascade = {CascadeType.ALL})

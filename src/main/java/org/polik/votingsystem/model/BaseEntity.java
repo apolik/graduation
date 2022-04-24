@@ -1,9 +1,8 @@
 package org.polik.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 import org.hibernate.Hibernate;
 import org.polik.votingsystem.HasId;
 import org.springframework.data.domain.Persistable;
@@ -17,15 +16,13 @@ import javax.persistence.*;
 @Access(AccessType.FIELD)
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class BaseEntity implements Persistable<Integer>, HasId {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     protected Integer id;
-
-    protected BaseEntity(Integer id) {
-        this.id = id;
-    }
 
     @Override
     @JsonIgnore
