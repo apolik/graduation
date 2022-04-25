@@ -9,6 +9,7 @@ import org.polik.votingsystem.util.RestaurantUtil;
 import org.polik.votingsystem.util.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.polik.votingsystem.util.RestaurantUtil.getTos;
@@ -21,9 +22,14 @@ public abstract class AbstractRestaurantController {
     @Autowired
     private RestaurantRepository repository;
 
-    public List<RestaurantTo> getAll() {
+    public List<RestaurantTo> getAllForToday() {
         log.info("getAll");
         return getTos(repository.findAllForCurrentDate());
+    }
+
+    public List<RestaurantTo> getAllByDate(LocalDate date) {
+        log.info("getAllByDate");
+        return getTos(repository.findAllByDate(date));
     }
 
     public RestaurantTo get(int id) {

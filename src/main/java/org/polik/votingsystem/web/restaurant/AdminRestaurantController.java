@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.polik.votingsystem.util.validation.ValidationUtil.checkNew;
@@ -29,8 +30,8 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @Override
     @Cacheable
     @GetMapping
-    public List<RestaurantTo> getAll() {
-        return super.getAll();
+    public List<RestaurantTo> getAllForToday() {
+        return super.getAllForToday();
     }
 
     @CacheEvict(allEntries = true)
@@ -60,6 +61,12 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         super.delete(id);
+    }
+
+    @Override
+    @GetMapping("/history")
+    public List<RestaurantTo> getAllByDate(@RequestParam LocalDate date) {
+        return super.getAllByDate(date);
     }
 
     @Override

@@ -24,14 +24,6 @@ class VoteControllerTest extends AbstractControllerTest {
     static final LocalTime BEFORE_11AM = LocalTime.parse("10:59:59");
     static final LocalTime AFTER_11AM = LocalTime.parse("11:00:01");
 
-    // fixme:
-    @Test
-    @WithUserDetails(USER_EMAIL)
-    void getConflict() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + FRIDAYS_ID))
-                .andExpect(status().isConflict());
-    }
-
     @Test
     @WithUserDetails(TEST_USER_EMAIL)
     void vote() throws Exception {

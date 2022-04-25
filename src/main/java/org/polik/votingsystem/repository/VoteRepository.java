@@ -31,6 +31,7 @@ public interface VoteRepository extends BaseRepository<Vote> {
     @Query("update Vote v set v.restaurant.id=?1 where v.user.id=?2 and v.date=current_date")
     int update(int restaurantId, int userId);
 
+    @Transactional
     default Vote vote(Vote vote) {
         try {
             return save(vote);
@@ -39,6 +40,7 @@ public interface VoteRepository extends BaseRepository<Vote> {
         }
     }
 
+    @Transactional
     default void revote(int restaurantId, int userId) {
         if (DateTimeUtil.isBefore(LocalTime.now(), LAST_HOUR_FOR_REVOTING)) {
             checkModification(update(restaurantId, userId), restaurantId);

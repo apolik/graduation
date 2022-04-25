@@ -15,6 +15,7 @@ import static org.mockito.Mockito.mockStatic;
 import static org.polik.votingsystem.web.restaurant.RestaurantTestData.*;
 import static org.polik.votingsystem.web.user.UserTestData.ADMIN_EMAIL;
 import static org.polik.votingsystem.web.user.UserTestData.USER_EMAIL;
+import static org.polik.votingsystem.web.vote.VoteTestData.TO_MATCHER;
 import static org.polik.votingsystem.web.vote.VoteTestData.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
