@@ -23,11 +23,14 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @Table(name = "restaurant", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@NamedEntityGraph(name = "graph.Parent.children", attributeNodes = @NamedAttributeNode("votes")) // added this
 public class Restaurant extends NamedEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
     private Set<Vote> votes = new HashSet<>();

@@ -23,7 +23,7 @@ public abstract class AbstractRestaurantController {
 
     public List<RestaurantTo> getAll() {
         log.info("getAll");
-        return getTos(repository.findAll()); //fixme
+        return getTos(repository.findAllForCurrentDate());
     }
 
     public RestaurantTo get(int id) {
