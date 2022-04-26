@@ -86,14 +86,13 @@ public class AdminVoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(ADMIN_EMAIL)
     void getAllForTodayByRestaurantId() throws Exception {
-        LocalDate today = LocalDate.now();
         int restaurantId = RestaurantTestData.FRIDAYS_ID;
 
         perform(MockMvcRequestBuilders.get(REST_URL + restaurantId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(TO_MATCHER.contentJson(
-                        filteredByPredicate(vote -> vote.getRestaurantId() == restaurantId && vote.getDate().equals(today))
+                        filteredByPredicate(vote -> vote.getRestaurantId() == restaurantId && vote.getDate().equals(TODAY))
                 ));
     }
 }

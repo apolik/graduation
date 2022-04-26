@@ -18,7 +18,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    void getAllForToday() throws Exception {
+    void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(TO_MATCHER.contentJson(RESTAURANTS_FOR_CURRENT_DATE));
@@ -40,8 +40,8 @@ class RestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    void getUnprocessableEntity() throws Exception {
+    void getNotFound() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND_ID))
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isNotFound());
     }
 }

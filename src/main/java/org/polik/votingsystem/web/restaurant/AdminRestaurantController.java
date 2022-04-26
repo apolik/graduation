@@ -30,8 +30,8 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @Override
     @Cacheable
     @GetMapping
-    public List<RestaurantTo> getAllForToday() {
-        return super.getAllForToday();
+    public List<RestaurantTo> getAll() {
+        return super.getAll();
     }
 
     @CacheEvict(allEntries = true)

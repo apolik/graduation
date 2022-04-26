@@ -23,13 +23,13 @@ public class DishController extends AbstractDishController {
     @Override
     @GetMapping
     @Cacheable
-    public List<DishTo> getAll() {
-        return super.getAll();
+    public List<DishTo> getAllForToday() {
+        return super.getAllForToday();
     }
 
     @Override
     @GetMapping("/{restaurantId}")
-    public List<DishTo> getAllByRestaurantId(@PathVariable int restaurantId) {
-        return super.getAllByRestaurantId(restaurantId);
+    public List<DishTo> getAllForTodayByRestaurantId(@PathVariable int restaurantId) {
+        return super.getAllForTodayByRestaurantId(restaurantId);
     }
 }

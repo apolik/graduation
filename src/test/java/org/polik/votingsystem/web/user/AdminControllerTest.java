@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by Polik on 4/22/2022
  */
 class AdminControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = AdminUserController.REST_URL + '/';
+    static final String REST_URL = AdminUserController.REST_URL + '/';
 
     @Autowired
     private UserRepository userRepository;

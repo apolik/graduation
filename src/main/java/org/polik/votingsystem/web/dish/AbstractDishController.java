@@ -1,7 +1,7 @@
 package org.polik.votingsystem.web.dish;
 
 import lombok.extern.slf4j.Slf4j;
-import org.polik.votingsystem.error.IllegalRequestDataException;
+import org.polik.votingsystem.error.NotFoundException;
 import org.polik.votingsystem.model.Dish;
 import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.repository.DishRepository;
@@ -30,8 +30,8 @@ public abstract class AbstractDishController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    public List<DishTo> getAll() {
-        log.info("getAll");
+    public List<DishTo> getAllForToday() {
+        log.info("getAllForToday");
         return DishUtil.createTos(repository.findAll());
     }
 
@@ -45,8 +45,8 @@ public abstract class AbstractDishController {
         return DishUtil.createTos(repository.findAllByDateAndRestaurantId(date, restaurantId));
     }
 
-    public List<DishTo> getAllByRestaurantId(int restaurantId) {
-        log.info("getAllByRestaurantId {}", restaurantId);
+    public List<DishTo> getAllForTodayByRestaurantId(int restaurantId) {
+        log.info("getAllForTodayByRestaurantId {}", restaurantId);
         return DishUtil.createTos(repository.findAllByRestaurantId(restaurantId));
     }
 
@@ -82,7 +82,7 @@ public abstract class AbstractDishController {
     private Restaurant getRestaurant(int id) {
         Optional<Restaurant> result = restaurantRepository.findById(id);
         return result.orElseThrow(
-                () -> new IllegalRequestDataException("No such restaurant with id: " + id)
+                () -> new NotFoundException("No such restaurant with id: " + id)
         );
     }
 }

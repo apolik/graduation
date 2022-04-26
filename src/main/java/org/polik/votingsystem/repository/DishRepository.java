@@ -23,8 +23,4 @@ public interface DishRepository extends BaseRepository<Dish> {
     @Override
     @Query("from Dish d where d.date=current_date")
     List<Dish> findAll();
-
-    @Override
-    @Transactional
-    <S extends Dish> S save(S entity);
 }

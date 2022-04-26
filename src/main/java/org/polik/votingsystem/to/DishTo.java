@@ -1,6 +1,7 @@
 package org.polik.votingsystem.to;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.Value;
 import org.hibernate.validator.constraints.Range;
 
@@ -12,6 +13,7 @@ import java.beans.ConstructorProperties;
  */
 @Value
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class DishTo extends NamedTo {
 
     @NotNull

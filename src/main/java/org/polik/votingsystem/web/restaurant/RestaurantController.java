@@ -23,8 +23,8 @@ public class RestaurantController extends AbstractRestaurantController {
     @Override
     @GetMapping
     @Cacheable
-    public List<RestaurantTo> getAllForToday() {
-        return super.getAllForToday();
+    public List<RestaurantTo> getAll() {
+        return super.getAll();
     }
 
     @Override

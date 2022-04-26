@@ -11,6 +11,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 /**
  * Created by Polik on 4/14/2022
  */
@@ -22,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class AbstractControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
+    protected static final LocalDate TODAY = LocalDate.now();
 
     protected ResultActions perform(MockHttpServletRequestBuilder builder) throws Exception {
         return mockMvc.perform(builder);

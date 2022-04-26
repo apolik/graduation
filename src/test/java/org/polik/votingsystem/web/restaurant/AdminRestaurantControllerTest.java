@@ -9,8 +9,6 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.time.LocalDate;
-
 import static org.polik.votingsystem.util.RestaurantUtil.createTo;
 import static org.polik.votingsystem.web.restaurant.RestaurantTestData.*;
 import static org.polik.votingsystem.web.user.UserTestData.ADMIN_EMAIL;
@@ -25,7 +23,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(ADMIN_EMAIL)
-    void getAllForToday() throws Exception {
+    void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(TO_MATCHER.contentJson(RESTAURANTS_FOR_CURRENT_DATE));
@@ -34,9 +32,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(ADMIN_EMAIL)
     void getAllByDate() throws Exception {
-        LocalDate date = LocalDate.now();
-
-        perform(MockMvcRequestBuilders.get(REST_URL + "history?date=" + date))
+        perform(MockMvcRequestBuilders.get(REST_URL + "history?date=" + TODAY))
                 .andExpect(status().isOk())
                 .andExpect(TO_MATCHER.contentJson(RESTAURANTS_FOR_CURRENT_DATE));
     }
@@ -93,8 +89,8 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(ADMIN_EMAIL)
-    void getUnprocessableEntity() throws Exception {
+    void getNotFound() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND_ID))
-                .andExpect(status().isUnprocessableEntity());
+                .andExpect(status().isNotFound());
     }
 }

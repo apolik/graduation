@@ -45,6 +45,13 @@ public class Dish extends NamedEntity implements Serializable {
         this.price = price;
     }
 
+    public Dish(Integer id, String name, Integer price, LocalDate date, Restaurant restaurant) {
+        super(id, name);
+        this.price = price;
+        this.date = date;
+        this.restaurant = restaurant;
+    }
+
     public Dish(Integer id, String name, Integer price, Restaurant restaurant) {
         super.id = id;
         this.name = name;

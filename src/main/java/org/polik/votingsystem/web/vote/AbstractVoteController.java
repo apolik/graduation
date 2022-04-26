@@ -1,7 +1,7 @@
 package org.polik.votingsystem.web.vote;
 
 import lombok.extern.slf4j.Slf4j;
-import org.polik.votingsystem.error.IllegalRequestDataException;
+import org.polik.votingsystem.error.NotFoundException;
 import org.polik.votingsystem.model.User;
 import org.polik.votingsystem.model.Vote;
 import org.polik.votingsystem.repository.RestaurantRepository;
@@ -50,7 +50,7 @@ public abstract class AbstractVoteController {
         vote.setUser(user);
         vote.setRestaurant(restaurantRepository.findById(restaurantId)
                 .orElseThrow(
-                        () -> new IllegalRequestDataException("No such restaurant with id: " + restaurantId)
+                        () -> new NotFoundException("No such restaurant with id: " + restaurantId)
                 )
         );
 
