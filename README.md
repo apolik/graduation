@@ -23,8 +23,8 @@
 > http://localhost:8080/swagger-ui.html
 ## Credentials
 ```
-User:  user@yandex.ru / password
-Admin: ye@gmail.com / kanye
+User:  ye@gmail.com / kanye
+Admin: admin@gmail.com / admin
 ```
 ## Curl commands
 #### 1. Get all Restaurants
