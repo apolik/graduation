@@ -32,22 +32,22 @@ public abstract class AbstractDishController {
 
     public List<DishTo> getAllForToday() {
         log.info("getAllForToday");
-        return DishUtil.createTos(repository.findAll());
+        return DishUtil.getTos(repository.findAll());
     }
 
     public List<DishTo> getAllByDate(LocalDate date) {
         log.info("getAllByDate {}", date);
-        return DishUtil.createTos(repository.findAllByDate(date));
+        return DishUtil.getTos(repository.findAllByDate(date));
     }
 
     public List<DishTo> getAllByDateAndRestaurantId(@Nullable LocalDate date, int restaurantId) {
         log.info("getAllByDateAndRestaurantId {} {}", date, restaurantId);
-        return DishUtil.createTos(repository.findAllByDateAndRestaurantId(date, restaurantId));
+        return DishUtil.getTos(repository.findAllByDateAndRestaurantId(date, restaurantId));
     }
 
     public List<DishTo> getAllForTodayByRestaurantId(int restaurantId) {
         log.info("getAllForTodayByRestaurantId {}", restaurantId);
-        return DishUtil.createTos(repository.findAllByRestaurantId(restaurantId));
+        return DishUtil.getTos(repository.findAllByRestaurantId(restaurantId));
     }
 
     @Transactional

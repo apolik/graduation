@@ -58,7 +58,7 @@ public class DishTestData {
     }
 
     public static List<DishTo> filteredByPredicate(Predicate<? super Dish> filter) {
-        return DishUtil.createTos(
+        return DishUtil.getTos(
                 ALL_DISHES.stream()
                         .filter(filter)
                         .toList()

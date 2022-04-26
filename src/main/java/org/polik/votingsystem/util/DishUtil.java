@@ -13,7 +13,7 @@ import java.util.List;
  */
 @UtilityClass
 public class DishUtil {
-    public static List<DishTo> createTos(Collection<Dish> dishes) {
+    public static List<DishTo> getTos(Collection<Dish> dishes) {
         return dishes.stream()
                 .map(DishUtil::createTo)
                 .toList();

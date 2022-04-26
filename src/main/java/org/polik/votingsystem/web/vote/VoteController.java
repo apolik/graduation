@@ -1,6 +1,5 @@
 package org.polik.votingsystem.web.vote;
 
-import org.polik.votingsystem.model.Vote;
 import org.polik.votingsystem.to.VoteTo;
 import org.polik.votingsystem.web.AuthorizedUser;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ public class VoteController extends AbstractVoteController {
     }
 
     @PostMapping("/{id}")
-    public Vote vote(@PathVariable int id,
+    public VoteTo vote(@PathVariable int id,
                      @AuthenticationPrincipal AuthorizedUser authorizedUser) {
         return super.vote(id, authorizedUser.getUser());
     }

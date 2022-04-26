@@ -42,7 +42,7 @@ public abstract class AbstractVoteController {
     }
 
     @Transactional
-    public Vote vote(int restaurantId, User user) {
+    public VoteTo vote(int restaurantId, User user) {
         log.info("vote {} {}", restaurantId, user);
         Assert.notNull(user, "User cannot be null");
         Vote vote = new Vote();
@@ -54,7 +54,7 @@ public abstract class AbstractVoteController {
                 )
         );
 
-        return repository.vote(vote);
+        return VoteUtil.createTo(repository.vote(vote));
     }
 
     public void revote(int restaurantId, int userId) {

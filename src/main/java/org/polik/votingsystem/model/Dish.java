@@ -30,7 +30,7 @@ public class Dish extends NamedEntity implements Serializable {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
