@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  voting-system:
+    container_name: voting-system
+    image: dsafdsfadafs/votingsystem:1.0
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080

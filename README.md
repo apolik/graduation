@@ -15,10 +15,12 @@
 > * Each restaurant provides a new menu each day.
 
 ## Usage
-1. Clone this repository to your computer
-2. Open up terminal and navigate to the root directory 
-3. Make sure you've maven and java 17 installed
-4. Run 'mvn spring-boot:run'
+- Clone this repository to your machine 
+- Open up terminal and navigate to the root directory 
+- Make sure you've maven and java 17 installed
+- Run 'mvn spring-boot:run'
+## 🐬 Docker
+- docker-compose up
 ## Swagger UI documentation
 > http://localhost:8080/swagger-ui.html
 ## Credentials
@@ -53,5 +55,5 @@ Admin: admin@gmail.com / admin
 `curl -s -X POST http://localhost:8080/api/voting/4 --user test@gmail.com:testuser`
 
 ## Application stack
-> Spring Boot, Spring MVC, Spring data JPA, Hibernate ORM, JUnit 5, AssertJ, Apache Tomcat, Hibernate Validator, 
-> SLF4J, Json Jackson, Springdoc OpenAPI UI, Mockito, Java 17.
+> Spring Boot, Spring MVC, Spring security, Spring data JPA, Hibernate ORM, JUnit 5, AssertJ, Apache Tomcat, Hibernate Validator, 
+> SLF4J, Json Jackson, Springdoc OpenAPI UI, Mockito, Java 17, Caffeine cache
