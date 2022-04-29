@@ -36,16 +36,16 @@ public class AdminVoteController extends AbstractVoteController {
         return super.getAllByDate(date);
     }
 
-    @PostMapping("/{id}")
-    public VoteTo vote(@PathVariable int id,
+    @PostMapping("/{restaurantId}")
+    public VoteTo vote(@PathVariable int restaurantId,
                      @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        return super.vote(id, authorizedUser.getUser());
+        return super.vote(restaurantId, authorizedUser.getUser());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{restaurantId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void revote(@PathVariable int id,
+    public void revote(@PathVariable int restaurantId,
                        @AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        super.revote(id, authorizedUser.getId());
+        super.revote(restaurantId, authorizedUser.getId());
     }
 }

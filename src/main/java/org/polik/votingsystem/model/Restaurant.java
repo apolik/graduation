@@ -21,11 +21,11 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @Table(name = "restaurant", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
-@NamedEntityGraph(name = "restaurant", attributeNodes = @NamedAttributeNode("votes"))
+@NamedEntityGraph(name = "votes", attributeNodes = @NamedAttributeNode("votes"))
 public class Restaurant extends NamedEntity {
 
     @OneToMany(mappedBy = "restaurant",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference

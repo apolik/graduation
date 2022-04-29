@@ -14,10 +14,11 @@ import java.util.Set;
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
     @Query("from Restaurant r left join r.votes v on v.date=current_date")
-    @EntityGraph(value = "restaurant")
+    @EntityGraph(value = "votes")
     Set<Restaurant> findAllForCurrentDate();
 
     @Query("from Restaurant r left join r.votes v on v.date=?1")
-    @EntityGraph(value = "restaurant")
+    @EntityGraph(value = "votes")
     Set<Restaurant> findAllByDate(LocalDate date);
+
 }

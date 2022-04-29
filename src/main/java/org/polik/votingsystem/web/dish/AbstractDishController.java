@@ -64,9 +64,9 @@ public abstract class AbstractDishController {
     }
 
     @Transactional
-    public void update(DishTo dishTo, int id) {
-        log.info("update {} {}", dishTo, id);
-        ValidationUtil.assureIdConsistent(dishTo, id);
+    public void update(DishTo dishTo, int restaurantId) {
+        log.info("update {} {}", dishTo, restaurantId);
+        ValidationUtil.assureIdConsistent(dishTo, restaurantId);
 
         repository.save(fromTo(
                 dishTo.getId(),

@@ -59,12 +59,12 @@ public class AdminDishController extends AbstractDishController {
     }
 
     @Override
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody @Valid DishTo dishTo,
-                       @PathVariable int id) {
-        super.update(dishTo, id);
+                       @PathVariable int restaurantId) {
+        super.update(dishTo, restaurantId);
     }
 
     @Override
