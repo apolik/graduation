@@ -44,11 +44,11 @@ Admin: admin@gmail.com / admin
 #### 7. Get all Dishes for today by restaurant 3
 `curl -s http://localhost:8080/api/dishes/3 --user ye@gmail.com:kanye`
 #### 8. Create Dish for Restaurant with id 3
-`curl -s -X POST -d '{"name": "new dish","price": 1017,"restaurantId": 3}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/api/admin/dishes --user admin@gmail.com:admin`
+`curl -s -X POST -d '{"name": "new dish","price": 1017.0,"restaurantId": 3}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/api/admin/dishes --user admin@gmail.com:admin`
 #### 9. Delete Dish with id 6
 `curl -s -X DELETE http://localhost:8080/api/admin/dishes/6 --user admin@gmail.com:admin`
 #### 10. Create 3 Dishes for restaurant 3
-`curl -s -X POST -d '[{"name": "Nuggets","price": 1099 }, {"name": "Pizza","price": 759 }, {"name": "Coca-cola","price": 509 }]' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/api/admin/dishes/3 --user admin@gmail.com:admin`
+`curl -s -X POST -d '[{"name": "Nuggets","price": 1099.0 }, {"name": "Pizza","price": 759.0 }, {"name": "Coca-cola","price": 509.0 }]' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/api/admin/dishes/3 --user admin@gmail.com:admin`
 #### 11. Get all Votes for today
 `curl -s http://localhost:8080/api/voting --user ye@gmail.com:kanye`
 #### 12. Get all Votes for today by restaurant 2

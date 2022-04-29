@@ -12,6 +12,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.beans.ConstructorProperties;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -27,7 +28,7 @@ public class Dish extends NamedEntity {
 
     @Column(name = "price")
     @NotNull
-    private Integer price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
@@ -40,24 +41,24 @@ public class Dish extends NamedEntity {
     private LocalDate date;
 
     @ConstructorProperties({"name", "price"})
-    public Dish(String name, int price) {
+    public Dish(String name, BigDecimal price) {
         super(null, name);
         this.price = price;
     }
 
-    public Dish(Integer id, String name, Integer price) {
+    public Dish(Integer id, String name, BigDecimal price) {
         super(id, name);
         this.price = price;
     }
 
-    public Dish(Integer id, String name, Integer price, LocalDate date, Restaurant restaurant) {
+    public Dish(Integer id, String name, BigDecimal price, LocalDate date, Restaurant restaurant) {
         super(id, name);
         this.price = price;
         this.date = date;
         this.restaurant = restaurant;
     }
 
-    public Dish(Integer id, String name, Integer price, Restaurant restaurant) {
+    public Dish(Integer id, String name, BigDecimal price, Restaurant restaurant) {
         super.id = id;
         this.name = name;
         this.price = price;
