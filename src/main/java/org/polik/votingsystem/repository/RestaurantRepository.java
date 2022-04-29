@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -21,4 +22,7 @@ public interface RestaurantRepository extends BaseRepository<Restaurant> {
     @EntityGraph(value = "votes")
     Set<Restaurant> findAllByDate(LocalDate date);
 
+    @Override
+    @EntityGraph(value = "votes")
+    Optional<Restaurant> findById(Integer integer);
 }
