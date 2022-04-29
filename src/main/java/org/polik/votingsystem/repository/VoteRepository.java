@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.polik.votingsystem.util.validation.ValidationUtil.LAST_HOUR_FOR_REVOTING;
+import static org.polik.votingsystem.util.DateTimeUtil.LAST_HOUR_FOR_REVOTING;
 import static org.polik.votingsystem.util.validation.ValidationUtil.checkModification;
 
 /**

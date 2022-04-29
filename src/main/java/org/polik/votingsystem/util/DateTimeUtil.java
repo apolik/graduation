@@ -13,6 +13,8 @@ import java.time.LocalTime;
  */
 @UtilityClass
 public class DateTimeUtil {
+    public static final int LAST_HOUR_FOR_REVOTING = 11;
+
     public static @Nullable
     LocalDate parseLocalDate(@Nullable String str) {
         return StringUtils.hasLength(str) ? LocalDate.parse(str) : null;

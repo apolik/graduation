@@ -13,7 +13,6 @@ import java.util.List;
  */
 @UtilityClass
 public class ValidationUtil {
-    public static final int LAST_HOUR_FOR_REVOTING = 11;
 
     public static void assureIdConsistent(HasId entity, int id) {
         if (entity.isNew()) {

@@ -27,6 +27,7 @@
 ```
 User:  ye@gmail.com / kanye
 Admin: admin@gmail.com / admin
+Test user: test@gmail.com / testuser
 ```
 ## Curl commands
 #### 1. Get all Restaurants
