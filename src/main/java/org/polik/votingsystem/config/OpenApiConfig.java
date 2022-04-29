@@ -6,9 +6,14 @@ import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.models.media.Schema;
 import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.SpringDocUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by Polik on 4/24/2022
@@ -29,6 +34,11 @@ import org.springframework.context.annotation.Configuration;
         security = @SecurityRequirement(name = "basicAuth")
 )
 public class OpenApiConfig {
+    static {
+        var schema = new Schema<LocalTime>();
+        schema.example(LocalTime.now().format(DateTimeFormatter.ISO_TIME));
+        SpringDocUtils.getConfig().replaceWithSchema(LocalTime.class, schema);
+    }
 
     @Bean
     public GroupedOpenApi api() {

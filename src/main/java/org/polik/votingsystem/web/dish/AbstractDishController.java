@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.polik.votingsystem.util.DishUtil.fromTo;
+import static org.polik.votingsystem.util.DishUtil.setRestaurant;
 
 /**
  * Created by Polik on 4/11/2022
@@ -72,6 +73,14 @@ public abstract class AbstractDishController {
                 dishTo,
                 getRestaurant(dishTo.getRestaurantId())
         ));
+    }
+
+    @Transactional
+    public List<Dish> createDishes(int restaurantId, List<Dish> dishes) {
+        log.info("createDishes {}", restaurantId);
+        Restaurant restaurant = getRestaurant(restaurantId);
+
+        return repository.saveAll(setRestaurant(dishes, restaurant));
     }
 
     public void delete(int id) {

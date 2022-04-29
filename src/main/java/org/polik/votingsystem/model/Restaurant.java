@@ -9,8 +9,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,10 +21,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @Table(name = "restaurant", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
-@NamedEntityGraph(name = "graph.Parent.children", attributeNodes = @NamedAttributeNode("votes")) // added this
-public class Restaurant extends NamedEntity implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+@NamedEntityGraph(name = "restaurant", attributeNodes = @NamedAttributeNode("votes"))
+public class Restaurant extends NamedEntity {
 
     @OneToMany(mappedBy = "restaurant",
             fetch = FetchType.EAGER,

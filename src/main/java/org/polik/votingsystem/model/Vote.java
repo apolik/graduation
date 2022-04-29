@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "unique_user_id_per_date_idx")})
-public class Vote extends BaseEntity {
+public class Vote extends BaseEntity  {
     @Column(name = "date")
     @CreationTimestamp
     private LocalDate date;

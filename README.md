@@ -5,7 +5,7 @@
 > Build a voting system for deciding where to have lunch.
 >
 > * 2 types of users: admin and regular users
-> * Admin can input a restaurant and it's lunch menu of the day (2-5 items usually, just a dish name and price)
+> * Admin can input a restaurant, and it's lunch menu of the day (2-5 items usually, just a dish name and price)
 > * Menu changes each day (admins do the updates)
 > * Users can vote on which restaurant they want to have lunch at
 > * Only one vote counted per user
@@ -20,7 +20,7 @@
 - Make sure you've maven and java 17 installed
 - Run 'mvn spring-boot:run'
 ## 🐬 Docker
-- docker-compose up
+- docker-compose up 
 ## Swagger UI documentation
 > http://localhost:8080/swagger-ui.html
 ## Credentials
@@ -47,13 +47,15 @@ Admin: admin@gmail.com / admin
 `curl -s -X POST -d '{"name": "new dish","price": 1017,"restaurantId": 3}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/api/admin/dishes --user admin@gmail.com:admin`
 #### 9. Delete Dish with id 6
 `curl -s -X DELETE http://localhost:8080/api/admin/dishes/6 --user admin@gmail.com:admin`
-#### 10. Get all Votes for today
+#### 10. Create 3 Dishes for restaurant 3
+`curl -s -X POST -d '[{"name": "Nuggets","price": 1099 }, {"name": "Pizza","price": 759 }, {"name": "Coca-cola","price": 509 }]' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/api/admin/dishes/3 --user admin@gmail.com:admin`
+#### 11. Get all Votes for today
 `curl -s http://localhost:8080/api/voting --user ye@gmail.com:kanye`
-#### 11. Get all Votes for today by restaurant 2
+#### 12. Get all Votes for today by restaurant 2
 `curl -s http://localhost:8080/api/admin/voting/2 --user admin@gmail.com:admin`
-#### 12. Vote for Restaurant with id 4
+#### 13. Vote for Restaurant with id 4
 `curl -s -X POST http://localhost:8080/api/voting/4 --user test@gmail.com:testuser`
 
 ## Application stack
-> Spring Boot, Spring MVC, Spring security, Spring data JPA, Hibernate ORM, JUnit 5, AssertJ, Apache Tomcat, Hibernate Validator, 
+> Spring Boot, Spring MVC, Spring Security, Spring Data JPA, Hibernate ORM, JUnit 5, AssertJ, Apache Tomcat, Hibernate Validator, 
 > SLF4J, Json Jackson, Springdoc OpenAPI UI, Mockito, Java 17, Caffeine cache

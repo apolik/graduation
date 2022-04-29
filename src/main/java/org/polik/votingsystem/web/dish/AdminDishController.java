@@ -51,6 +51,13 @@ public class AdminDishController extends AbstractDishController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @PostMapping(value = "/{restaurantId}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
+    public List<Dish> createDishes(@RequestBody @Valid List<Dish> dishes, @PathVariable int restaurantId) {
+        checkNew(dishes);
+        return super.createDishes(restaurantId, dishes);
+    }
+
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(allEntries = true)

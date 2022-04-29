@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by Polik on 4/26/2022
  */
-public class DishControllerTest extends AbstractControllerTest {
+class DishControllerTest extends AbstractControllerTest {
     static final String REST_URL = DishController.REST_URL + '/';
 
     @Test

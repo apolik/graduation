@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +27,8 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends NamedEntity implements HasIdAndEmail, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "password", nullable = false)
     @NotBlank

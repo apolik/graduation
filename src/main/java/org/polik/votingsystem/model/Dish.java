@@ -10,8 +10,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
+import java.beans.ConstructorProperties;
 import java.time.LocalDate;
 
 /**
@@ -23,11 +23,10 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Dish extends NamedEntity implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class Dish extends NamedEntity {
 
     @Column(name = "price")
+    @NotNull
     private Integer price;
 
     @ManyToOne
@@ -39,6 +38,12 @@ public class Dish extends NamedEntity implements Serializable {
     @Column(name = "date", updatable = false)
     @CreationTimestamp
     private LocalDate date;
+
+    @ConstructorProperties({"name", "price"})
+    public Dish(String name, int price) {
+        super(null, name);
+        this.price = price;
+    }
 
     public Dish(Integer id, String name, Integer price) {
         super(id, name);

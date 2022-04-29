@@ -6,6 +6,8 @@ import org.polik.votingsystem.error.IllegalRequestDataException;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 
+import java.util.List;
+
 /**
  * Created by Polik on 4/9/2022
  */
@@ -21,27 +23,18 @@ public class ValidationUtil {
         }
     }
 
-    public static <T> T checkNotFound(T obj, String message) {
-        if (obj == null)
-            throw new IllegalRequestDataException("Not found entity with " + message);
-        else
-            return obj;
-    }
-
     public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
             throw new IllegalRequestDataException(bean.getClass().getSimpleName() + " must be new (id=null)");
         }
     }
 
-    public static void checkNotFoundWithId(boolean found, int id) {
-        checkNotFound(found, "id=" + id);
-    }
-
-    public static void checkNotFound(boolean found, String msg) {
-        if (!found) {
-            throw new IllegalRequestDataException("Not found entity with " + msg);
-        }
+    public static void checkNew(List<? extends HasId> beans) {
+        beans.forEach(el -> {
+            if (!el.isNew()) {
+                throw new IllegalRequestDataException(el.getClass().getSimpleName() + " must be new (id=null)");
+            }
+        });
     }
 
     @NonNull

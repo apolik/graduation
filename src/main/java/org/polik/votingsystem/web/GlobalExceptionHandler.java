@@ -19,7 +19,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
@@ -50,6 +53,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleBindException(
             BindException ex, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
         return handleBindingErrors(ex.getBindingResult(), request);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleConstraintViolation(WebRequest request, ConstraintViolationException ex) {
+        Set<ConstraintViolation<?>> set = ex.getConstraintViolations();
+        String msg = set.stream()
+                .map(fe -> String.format("[%s] %s", fe.getPropertyPath(), fe.getMessage()))
+                .collect(Collectors.joining("\n"));
+
+        return createResponseEntity(getDefaultBody(request, ErrorAttributeOptions.defaults(), msg), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(AppException.class)

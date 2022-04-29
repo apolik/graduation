@@ -28,6 +28,12 @@ public class DishUtil {
         );
     }
 
+    public static List<Dish> setRestaurant(List<Dish> dishes, Restaurant restaurant) {
+        return dishes.stream()
+                .peek(el -> el.setRestaurant(restaurant))
+                .toList();
+    }
+
     public static Dish fromTo(DishTo dishTo) {
         return new Dish(dishTo.getId(),
                 dishTo.getName(),

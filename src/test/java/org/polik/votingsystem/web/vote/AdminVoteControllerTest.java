@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by Polik on 4/23/2022
  */
-public class AdminVoteControllerTest extends AbstractControllerTest {
+class AdminVoteControllerTest extends AbstractControllerTest {
     static final String REST_URL = AdminVoteController.REST_URL + '/';
     static final LocalTime BEFORE_11AM = LocalTime.parse("10:59:59");
     static final LocalTime AFTER_11AM = LocalTime.parse("11:00:01");

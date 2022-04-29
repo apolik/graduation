@@ -3,6 +3,7 @@ package org.polik.votingsystem.web.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
+import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +14,7 @@ import static org.polik.votingsystem.web.json.JacksonObjectMapper.getMapper;
 /**
  * Created by Polik on 4/22/2022
  */
+@UtilityClass
 public class JsonUtil {
 
     public static <T> List<T> readValues(String json, Class<T> clazz) {
