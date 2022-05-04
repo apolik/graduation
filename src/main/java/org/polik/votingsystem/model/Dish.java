@@ -36,9 +36,9 @@ public class Dish extends NamedEntity {
     @JsonBackReference
     private Restaurant restaurant;
 
-    @Column(name = "date", updatable = false)
+    @Column(name = "creation_date", updatable = false)
     @CreationTimestamp
-    private LocalDate date;
+    private LocalDate creationDate;
 
     @ConstructorProperties({"name", "price"})
     public Dish(String name, BigDecimal price) {
@@ -51,10 +51,10 @@ public class Dish extends NamedEntity {
         this.price = price;
     }
 
-    public Dish(Integer id, String name, BigDecimal price, LocalDate date, Restaurant restaurant) {
+    public Dish(Integer id, String name, BigDecimal price, LocalDate creationDate, Restaurant restaurant) {
         super(id, name);
         this.price = price;
-        this.date = date;
+        this.creationDate = creationDate;
         this.restaurant = restaurant;
     }
 

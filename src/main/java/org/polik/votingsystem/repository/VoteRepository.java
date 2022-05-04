@@ -22,13 +22,16 @@ import static org.polik.votingsystem.util.validation.ValidationUtil.checkModific
  */
 @Transactional(readOnly = true)
 public interface VoteRepository extends BaseRepository<Vote> {
-    List<Vote> findAllByDate(LocalDate date);
+    List<Vote> findAllByVoteDate(LocalDate date);
 
-    List<Vote> findAllByDateAndRestaurant_Id(LocalDate date, int id);
+    @Query("from Vote v where v.voteDate=current_date")
+    List<Vote> findAllForToday();
+
+    List<Vote> findAllByVoteDateAndRestaurant_Id(LocalDate date, int id);
 
     @Transactional
     @Modifying
-    @Query("update Vote v set v.restaurant.id=?1 where v.user.id=?2 and v.date=current_date")
+    @Query("update Vote v set v.restaurant.id=?1 where v.user.id=?2 and v.voteDate=current_date")
     int update(int restaurantId, int userId);
 
     @Transactional

@@ -32,7 +32,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
     void getAllForToday() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
-                .andExpect(TO_MATCHER.contentJson(filteredByPredicate(vote -> vote.getDate().equals(TODAY))));
+                .andExpect(TO_MATCHER.contentJson(filteredByPredicate(vote -> vote.getCreationDate().equals(TODAY))));
     }
 
     @Test
@@ -95,7 +95,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + "history?date=" + date))
                 .andExpect(status().isOk())
                 .andExpect(TO_MATCHER.contentJson(
-                        filteredByPredicate(vote -> vote.getDate().equals(date))
+                        filteredByPredicate(vote -> vote.getCreationDate().equals(date))
                 ));
     }
 
@@ -108,7 +108,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(url))
                 .andExpect(status().isOk())
                 .andExpect(TO_MATCHER.contentJson(filteredByPredicate(
-                                vote -> vote.getDate().equals(date) && vote.getRestaurant().id() == FRIDAYS_ID
+                                vote -> vote.getCreationDate().equals(date) && vote.getRestaurant().id() == FRIDAYS_ID
                         )
                 ));
     }
@@ -145,7 +145,7 @@ class AdminDishControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + id))
                 .andExpect(status().isOk())
                 .andExpect(TO_MATCHER.contentJson(filteredByPredicate(
-                                vote -> vote.getDate().equals(TODAY) && vote.getRestaurant().id() == id
+                                vote -> vote.getCreationDate().equals(TODAY) && vote.getRestaurant().id() == id
                         ))
                 );
     }

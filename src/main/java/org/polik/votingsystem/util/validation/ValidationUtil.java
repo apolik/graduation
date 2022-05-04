@@ -6,8 +6,6 @@ import org.polik.votingsystem.error.IllegalRequestDataException;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 
-import java.util.List;
-
 /**
  * Created by Polik on 4/9/2022
  */
@@ -26,14 +24,6 @@ public class ValidationUtil {
         if (!bean.isNew()) {
             throw new IllegalRequestDataException(bean.getClass().getSimpleName() + " must be new (id=null)");
         }
-    }
-
-    public static void checkNew(List<? extends HasId> beans) {
-        beans.forEach(el -> {
-            if (!el.isNew()) {
-                throw new IllegalRequestDataException(el.getClass().getSimpleName() + " must be new (id=null)");
-            }
-        });
     }
 
     @NonNull

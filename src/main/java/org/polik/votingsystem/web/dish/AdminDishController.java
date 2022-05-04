@@ -34,12 +34,6 @@ public class AdminDishController extends AbstractDishController {
         return super.getAllForToday();
     }
 
-    @Override
-    @GetMapping("/{restaurantId}")
-    public List<DishTo> getAllForTodayByRestaurantId(@PathVariable int restaurantId) {
-        return super.getAllForTodayByRestaurantId(restaurantId);
-    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(allEntries = true)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody DishTo dishTo) {
@@ -53,8 +47,8 @@ public class AdminDishController extends AbstractDishController {
 
     @PostMapping(value = "/{restaurantId}",consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(allEntries = true)
-    public List<Dish> createDishes(@RequestBody @Valid List<Dish> dishes, @PathVariable int restaurantId) {
-        checkNew(dishes);
+    public List<Dish> createDishes(@RequestBody @Valid List<Dish> dishes,
+                                   @PathVariable int restaurantId) {
         return super.createDishes(restaurantId, dishes);
     }
 
@@ -76,9 +70,9 @@ public class AdminDishController extends AbstractDishController {
     }
 
     @Override
-    @GetMapping("/history")
-    public List<DishTo> getAllByDate(@RequestParam LocalDate date) {
-        return super.getAllByDate(date);
+    @GetMapping("/{restaurantId}")
+    public List<DishTo> getAllForTodayByRestaurantId(@PathVariable int restaurantId) {
+        return super.getAllForTodayByRestaurantId(restaurantId);
     }
 
     @Override
@@ -86,5 +80,11 @@ public class AdminDishController extends AbstractDishController {
     public List<DishTo> getAllByDateAndRestaurantId(@RequestParam LocalDate date,
                                                     @PathVariable int restaurantId) {
         return super.getAllByDateAndRestaurantId(date, restaurantId);
+    }
+
+    @Override
+    @GetMapping("/history")
+    public List<DishTo> getAllByDate(@RequestParam LocalDate date) {
+        return super.getAllByDate(date);
     }
 }

@@ -22,7 +22,7 @@ class DishControllerTest extends AbstractControllerTest {
     void getAllForToday() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
-                .andExpect(TO_MATCHER.contentJson(filteredByPredicate(vote -> vote.getDate().equals(TODAY))));
+                .andExpect(TO_MATCHER.contentJson(filteredByPredicate(vote -> vote.getCreationDate().equals(TODAY))));
     }
 
     @Test
@@ -39,7 +39,7 @@ class DishControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + id))
                 .andExpect(status().isOk())
                 .andExpect(TO_MATCHER.contentJson(filteredByPredicate(
-                                vote -> vote.getDate().equals(TODAY) && vote.getRestaurant().id() == id
+                                vote -> vote.getCreationDate().equals(TODAY) && vote.getRestaurant().id() == id
                         ))
                 );
     }

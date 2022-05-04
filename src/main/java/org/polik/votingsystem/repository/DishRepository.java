@@ -13,14 +13,13 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface DishRepository extends BaseRepository<Dish> {
 
-    @Query("from Dish d where d.restaurant.id=?1 and d.date=current_date")
-    List<Dish> findAllByRestaurantId(int restaurantId);
+    @Query("from Dish d where d.creationDate=current_date")
+    List<Dish> findAllForToday();
 
-    List<Dish> findAllByDate(LocalDate date);
+    @Query("from Dish d where d.creationDate=current_date and d.restaurant.id=?1")
+    List<Dish> findAllForTodayByRestaurantId(int restaurantId);
 
-    List<Dish> findAllByDateAndRestaurantId(LocalDate date, int restaurantId);
+    List<Dish> findAllByCreationDate(LocalDate date);
 
-    @Override
-    @Query("from Dish d where d.date=current_date")
-    List<Dish> findAll();
+    List<Dish> findAllByCreationDateAndRestaurantId(LocalDate date, int restaurantId);
 }

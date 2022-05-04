@@ -14,13 +14,13 @@ import java.time.LocalDate;
 public class VoteTo extends BaseTo {
     String restaurant;
     int restaurantId;
-    LocalDate date;
+    LocalDate voteDate;
 
-    @ConstructorProperties({"id", "restaurant", "restaurantId", "date"})
-    public VoteTo(int id, String restaurant, int restaurantId, LocalDate date) {
+    @ConstructorProperties({"id", "restaurant", "restaurantId", "voteDate"})
+    public VoteTo(int id, String restaurant, int restaurantId, LocalDate voteDate) {
         super(id);
         this.restaurant = restaurant;
         this.restaurantId = restaurantId;
-        this.date = date;
+        this.voteDate = voteDate;
     }
 }

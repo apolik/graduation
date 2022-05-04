@@ -47,12 +47,12 @@ class AdminVoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(ADMIN_EMAIL)
     void getAllByDate() throws Exception {
-        LocalDate date = userVote2.getDate();
+        LocalDate date = userVote2.getVoteDate();
 
         perform(MockMvcRequestBuilders.get(REST_URL + "history?date=" + date))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(TO_MATCHER.contentJson(filteredByPredicate(vote -> vote.getDate().equals(date))));
+                .andExpect(TO_MATCHER.contentJson(filteredByPredicate(vote -> vote.getVoteDate().equals(date))));
     }
 
     @Test
@@ -92,7 +92,7 @@ class AdminVoteControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(TO_MATCHER.contentJson(
-                        filteredByPredicate(vote -> vote.getRestaurantId() == restaurantId && vote.getDate().equals(TODAY))
+                        filteredByPredicate(vote -> vote.getRestaurantId() == restaurantId && vote.getVoteDate().equals(TODAY))
                 ));
     }
 }

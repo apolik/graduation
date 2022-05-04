@@ -18,7 +18,7 @@ VALUES ('Macdonalds'),
        ('Kroger'),
        ('Wingstop');
 
-INSERT INTO VOTES(restaurant_id, user_id, date)
+INSERT INTO VOTES(restaurant_id, user_id, vote_date)
 VALUES (1, 1, '2022-03-10'),
        (4, 2, '2022-03-10'),
        (3, 3, '2022-03-10'),
@@ -32,7 +32,9 @@ VALUES (1, 1, '2022-03-10'),
        (4, 3, CURRENT_DATE),
        (3, 4, CURRENT_DATE);
 
-INSERT INTO DISHES(name, price, date, restaurant_id)
+
+
+INSERT INTO DISHES(name, price, creation_date, restaurant_id)
 VALUES ('Блинчики', 7443.0, '2022-03-10', 1),
        ('Оладушки', 4312.0, '2022-03-10', 3),
        ('Чашечка чая', 1432.0, '2022-03-10', 4),

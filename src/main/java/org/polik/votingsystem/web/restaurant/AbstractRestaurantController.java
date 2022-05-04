@@ -47,7 +47,6 @@ public abstract class AbstractRestaurantController {
     public void update(Restaurant restaurant, int id) {
         log.info("update {} {}", restaurant, id);
         ValidationUtil.assureIdConsistent(restaurant, id);
-
         repository.save(restaurant);
     }
 

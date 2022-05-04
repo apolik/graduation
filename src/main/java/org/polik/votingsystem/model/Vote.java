@@ -18,12 +18,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "unique_user_id_per_date_idx")})
+@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "vote_date"}, name = "unique_user_id_per_date_idx")})
 public class Vote extends BaseEntity  {
-    @Column(name = "date")
-    @CreationTimestamp
-    private LocalDate date;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -35,9 +31,18 @@ public class Vote extends BaseEntity  {
     @JsonBackReference
     private Restaurant restaurant;
 
-    public Vote(Integer id, LocalDate date, User user, Restaurant restaurant) {
+    @Column(name = "vote_date")
+    @CreationTimestamp
+    private LocalDate voteDate;
+
+    public Vote(Integer id, LocalDate voteDate, User user, Restaurant restaurant) {
         super(id);
-        this.date = date;
+        this.voteDate = voteDate;
+        this.user = user;
+        this.restaurant = restaurant;
+    }
+
+    public Vote(User user, Restaurant restaurant) {
         this.user = user;
         this.restaurant = restaurant;
     }

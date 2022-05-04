@@ -10,7 +10,6 @@ import org.polik.votingsystem.to.DishTo;
 import org.polik.votingsystem.util.DishUtil;
 import org.polik.votingsystem.util.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.polik.votingsystem.util.DishUtil.fromTo;
-import static org.polik.votingsystem.util.DishUtil.setRestaurant;
+import static org.polik.votingsystem.util.DishUtil.prepareToSave;
 
 /**
  * Created by Polik on 4/11/2022
@@ -33,22 +32,22 @@ public abstract class AbstractDishController {
 
     public List<DishTo> getAllForToday() {
         log.info("getAllForToday");
-        return DishUtil.getTos(repository.findAll());
+        return DishUtil.getTos(repository.findAllForToday());
     }
 
     public List<DishTo> getAllByDate(LocalDate date) {
         log.info("getAllByDate {}", date);
-        return DishUtil.getTos(repository.findAllByDate(date));
+        return DishUtil.getTos(repository.findAllByCreationDate(date));
     }
 
-    public List<DishTo> getAllByDateAndRestaurantId(@Nullable LocalDate date, int restaurantId) {
+    public List<DishTo> getAllByDateAndRestaurantId(LocalDate date, int restaurantId) {
         log.info("getAllByDateAndRestaurantId {} {}", date, restaurantId);
-        return DishUtil.getTos(repository.findAllByDateAndRestaurantId(date, restaurantId));
+        return DishUtil.getTos(repository.findAllByCreationDateAndRestaurantId(date, restaurantId));
     }
 
     public List<DishTo> getAllForTodayByRestaurantId(int restaurantId) {
         log.info("getAllForTodayByRestaurantId {}", restaurantId);
-        return DishUtil.getTos(repository.findAllByRestaurantId(restaurantId));
+        return DishUtil.getTos(repository.findAllForTodayByRestaurantId(restaurantId));
     }
 
     @Transactional
@@ -67,12 +66,7 @@ public abstract class AbstractDishController {
     public void update(DishTo dishTo, int restaurantId) {
         log.info("update {} {}", dishTo, restaurantId);
         ValidationUtil.assureIdConsistent(dishTo, restaurantId);
-
-        repository.save(fromTo(
-                dishTo.getId(),
-                dishTo,
-                getRestaurant(dishTo.getRestaurantId())
-        ));
+        repository.save(fromTo(dishTo, getRestaurant(dishTo.getRestaurantId())));
     }
 
     @Transactional
@@ -80,7 +74,7 @@ public abstract class AbstractDishController {
         log.info("createDishes {}", restaurantId);
         Restaurant restaurant = getRestaurant(restaurantId);
 
-        return repository.saveAll(setRestaurant(dishes, restaurant));
+        return repository.saveAll(prepareToSave(dishes, restaurant));
     }
 
     public void delete(int id) {

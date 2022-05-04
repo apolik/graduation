@@ -44,7 +44,7 @@ public class VoteTestData {
         ALL_VOTES.addAll(VoteUtil.getTos(Stream.of(adminVote1, userVote1, superVote1, guestVote1,
                                                 adminVote2, userVote2, superVote2, guestVote2,
                                                 adminVote3, userVote3, superVote3, guestVote3).toList()));
-        VOTES_FOR_CURRENT_DATE.addAll(filteredByPredicate(vote -> vote.getDate().equals(LocalDate.now())));
+        VOTES_FOR_CURRENT_DATE.addAll(filteredByPredicate(vote -> vote.getVoteDate().equals(LocalDate.now())));
     }
 
     public static List<VoteTo> filteredByPredicate(Predicate<? super VoteTo> filter) {
