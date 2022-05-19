@@ -13,7 +13,7 @@ import java.time.LocalTime;
  */
 @UtilityClass
 public class DateTimeUtil {
-    public static final int LAST_HOUR_FOR_REVOTING = 11;
+    public static final LocalTime DEADLINE_FOR_REVOTING = LocalTime.parse("11:00:00");
 
     public static @Nullable
     LocalDate parseLocalDate(@Nullable String str) {
@@ -30,7 +30,7 @@ public class DateTimeUtil {
         return StringUtils.hasLength(str) ? LocalDateTime.parse(str) : null;
     }
 
-    public static boolean isBefore(LocalTime time, int hour) {
-        return time.getHour() < hour;
+    public static boolean isBeforeDeadline(LocalTime time) {
+        return time.isBefore(DEADLINE_FOR_REVOTING);
     }
 }

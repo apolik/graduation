@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.NotNull;
 import java.beans.ConstructorProperties;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * Created by Polik on 4/10/2022
@@ -16,24 +17,25 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class DishTo extends NamedTo {
-
     @NotNull
-    @Range(min = 100, max = 10000, message = "Price must be between 100 and 10000")
+    @Range(min = 0, message = "Price must be more than 0")
     BigDecimal price;
 
     @NotNull
     Integer restaurantId;
 
-    @ConstructorProperties({"name", "price", "restaurantId"})
-    public DishTo(String name, BigDecimal price, Integer restaurantId) {
-        super(null, name);
-        this.price = price;
-        this.restaurantId = restaurantId;
+    @NotNull
+    LocalDate entryDate;
+
+    @ConstructorProperties({"name", "price", "restaurantId", "entryDate"})
+    public DishTo(String name, BigDecimal price, Integer restaurantId, LocalDate entryDate) {
+        this(null, name, price, restaurantId, entryDate);
     }
 
-    public DishTo(Integer id, String name, BigDecimal price, Integer restaurantId) {
+    public DishTo(Integer id, String name, BigDecimal price, Integer restaurantId, LocalDate entryDate) {
         super(id, name);
         this.price = price;
         this.restaurantId = restaurantId;
+        this.entryDate = entryDate;
     }
 }

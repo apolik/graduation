@@ -39,7 +39,7 @@ public class ProfileController extends AbstractUserController {
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@AuthenticationPrincipal AuthorizedUser authUser) {
-        super.delete(authUser.getId());
+        super.delete(authUser.id());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +59,7 @@ public class ProfileController extends AbstractUserController {
     @Transactional
     @CacheEvict(allEntries = true)
     public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthorizedUser authUser) {
-        assureIdConsistent(userTo, authUser.getId());
+        assureIdConsistent(userTo, authUser.id());
         User user = authUser.getUser();
         prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }

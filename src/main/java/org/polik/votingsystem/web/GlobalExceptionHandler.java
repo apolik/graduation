@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.polik.votingsystem.util.DateTimeUtil.DEADLINE_FOR_REVOTING;
 import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
 
 /**
@@ -36,7 +37,7 @@ import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.M
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
     public static final String EXCEPTION_DUPLICATE_VOTE = "You cannot vote more than once a day";
-    public static final String EXCEPTION_EXPIRED_TIME = "You cannot change your mind after 11 PM";
+    public static final String EXCEPTION_EXPIRED_TIME = String.format("You cannot change your mind after %s", DEADLINE_FOR_REVOTING);
 
     private final ErrorAttributes errorAttributes;
 

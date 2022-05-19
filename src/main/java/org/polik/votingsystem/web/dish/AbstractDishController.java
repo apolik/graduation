@@ -1,23 +1,22 @@
 package org.polik.votingsystem.web.dish;
 
 import lombok.extern.slf4j.Slf4j;
-import org.polik.votingsystem.error.NotFoundException;
 import org.polik.votingsystem.model.Dish;
 import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.repository.DishRepository;
 import org.polik.votingsystem.repository.RestaurantRepository;
 import org.polik.votingsystem.to.DishTo;
-import org.polik.votingsystem.util.DishUtil;
-import org.polik.votingsystem.util.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import static org.polik.votingsystem.util.DishUtil.fromTo;
-import static org.polik.votingsystem.util.DishUtil.prepareToSave;
+import static org.polik.votingsystem.util.DishUtil.getTos;
+import static org.polik.votingsystem.util.Util.safeGet;
+import static org.polik.votingsystem.util.validation.ValidationUtil.assureIdConsistent;
 
 /**
  * Created by Polik on 4/11/2022
@@ -30,51 +29,28 @@ public abstract class AbstractDishController {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    public List<DishTo> getAllForToday() {
-        log.info("getAllForToday");
-        return DishUtil.getTos(repository.findAllForToday());
-    }
-
-    public List<DishTo> getAllByDate(LocalDate date) {
-        log.info("getAllByDate {}", date);
-        return DishUtil.getTos(repository.findAllByCreationDate(date));
-    }
-
-    public List<DishTo> getAllByDateAndRestaurantId(LocalDate date, int restaurantId) {
-        log.info("getAllByDateAndRestaurantId {} {}", date, restaurantId);
-        return DishUtil.getTos(repository.findAllByCreationDateAndRestaurantId(date, restaurantId));
-    }
-
-    public List<DishTo> getAllForTodayByRestaurantId(int restaurantId) {
-        log.info("getAllForTodayByRestaurantId {}", restaurantId);
-        return DishUtil.getTos(repository.findAllForTodayByRestaurantId(restaurantId));
+    public List<DishTo> getAll(@Nullable Integer restaurantId, @Nullable LocalDate date) {
+        log.info("getAll {} {}", restaurantId, date);
+        return getTos(repository.findAll(restaurantId, date));
     }
 
     @Transactional
     public Dish create(DishTo dishTo) {
         log.info("create {}", dishTo);
-        Dish dish = fromTo(dishTo);
-
-        dish.setRestaurant(
-                getRestaurant(dishTo.getRestaurantId())
-        );
-
+        Dish dish = fromTo(dishTo, getRestaurant(dishTo.getRestaurantId()));
         return repository.save(dish);
     }
 
     @Transactional
-    public void update(DishTo dishTo, int restaurantId) {
-        log.info("update {} {}", dishTo, restaurantId);
-        ValidationUtil.assureIdConsistent(dishTo, restaurantId);
+    public void update(DishTo dishTo, int id) {
+        log.info("update {} {}", dishTo, id);
+        assureIdConsistent(dishTo, id);
         repository.save(fromTo(dishTo, getRestaurant(dishTo.getRestaurantId())));
     }
 
-    @Transactional
-    public List<Dish> createDishes(int restaurantId, List<Dish> dishes) {
-        log.info("createDishes {}", restaurantId);
-        Restaurant restaurant = getRestaurant(restaurantId);
-
-        return repository.saveAll(prepareToSave(dishes, restaurant));
+    public Dish get(int id) {
+        log.info("get {}", id);
+        return safeGet(repository.findById(id), id);
     }
 
     public void delete(int id) {
@@ -82,10 +58,7 @@ public abstract class AbstractDishController {
         repository.deleteExisted(id);
     }
 
-    private Restaurant getRestaurant(int id) {
-        Optional<Restaurant> result = restaurantRepository.findById(id);
-        return result.orElseThrow(
-                () -> new NotFoundException("No such restaurant with id: " + id)
-        );
+    private Restaurant getRestaurant(int restaurantId) {
+        return safeGet(restaurantRepository.findById(restaurantId), restaurantId);
     }
 }

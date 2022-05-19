@@ -6,13 +6,10 @@ import org.polik.votingsystem.web.AbstractControllerTest;
 import org.polik.votingsystem.web.json.JsonUtil;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.polik.votingsystem.util.RestaurantUtil.createTo;
 import static org.polik.votingsystem.web.restaurant.RestaurantTestData.*;
 import static org.polik.votingsystem.web.user.UserTestData.ADMIN_EMAIL;
-import static org.polik.votingsystem.web.user.UserTestData.USER_EMAIL;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -23,40 +20,39 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(ADMIN_EMAIL)
-    void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL))
-                .andExpect(status().isOk())
-                .andExpect(TO_MATCHER.contentJson(RESTAURANTS_FOR_CURRENT_DATE));
-    }
-
-    @Test
-    @WithUserDetails(ADMIN_EMAIL)
-    void getAllByDate() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "history?date=" + TODAY))
-                .andExpect(status().isOk())
-                .andExpect(TO_MATCHER.contentJson(RESTAURANTS_FOR_CURRENT_DATE));
-    }
-
-    @Test
-    @WithUserDetails(USER_EMAIL)
-    void getForbidden() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL))
-                .andExpect(status().isForbidden());
-    }
-
-    @Test
-    @WithUserDetails(ADMIN_EMAIL)
     void createWithLocation() throws Exception {
-        Restaurant restaurant = getNew();
+        var restaurant = getNew();
 
-        ResultActions actions = perform(MockMvcRequestBuilders.post(REST_URL)
+        var resultActions = perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(restaurant)))
                 .andExpect(status().isCreated());
 
-        Restaurant created = RESTAURANT_MATCHER.readFromJson(actions);
+        var created = RESTAURANT_MATCHER.readFromJson(resultActions);
         restaurant.setId(created.id());
         RESTAURANT_MATCHER.assertMatch(restaurant, created);
+    }
+
+    @Test
+    @WithUserDetails(ADMIN_EMAIL)
+    void update() throws Exception {
+        var updated = getUpdated();
+
+        perform(MockMvcRequestBuilders.put(REST_URL + updated.id())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @WithUserDetails(ADMIN_EMAIL)
+    void createInvalid() throws Exception {
+        var restaurant = new Restaurant(null, null);
+
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(restaurant)))
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -71,26 +67,5 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + MACDONALDS_ID))
                 .andExpect(status().isNoContent());
-    }
-
-    @Test
-    void getAllUnAuth() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    @WithUserDetails(ADMIN_EMAIL)
-    void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + MACDONALDS_ID))
-                .andExpect(status().isOk())
-                .andExpect(TO_MATCHER.contentJson(createTo(macdonalds)));
-    }
-
-    @Test
-    @WithUserDetails(ADMIN_EMAIL)
-    void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND_ID))
-                .andExpect(status().isNotFound());
     }
 }

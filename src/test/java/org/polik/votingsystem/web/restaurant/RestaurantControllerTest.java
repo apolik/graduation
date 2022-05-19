@@ -5,7 +5,6 @@ import org.polik.votingsystem.web.AbstractControllerTest;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.polik.votingsystem.util.RestaurantUtil.createTo;
 import static org.polik.votingsystem.web.restaurant.RestaurantTestData.*;
 import static org.polik.votingsystem.web.user.UserTestData.USER_EMAIL;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,7 +20,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
     void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
-                .andExpect(TO_MATCHER.contentJson(RESTAURANTS_FOR_CURRENT_DATE));
+                .andExpect(RESTAURANT_MATCHER.contentJson(RESTAURANTS));
     }
 
     @Test
@@ -35,7 +34,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
     void get() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + MACDONALDS_ID))
                 .andExpect(status().isOk())
-                .andExpect(TO_MATCHER.contentJson(createTo(macdonalds)));
+                .andExpect(RESTAURANT_MATCHER.contentJson(macdonalds));
     }
 
     @Test

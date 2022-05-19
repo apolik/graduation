@@ -66,6 +66,16 @@ public class DishTestData {
         );
     }
 
+    public static Dish getById(int id) {
+        for (Dish dish : ALL_DISHES) {
+            if (dish.id() == id) {
+                return dish;
+            }
+        }
+
+        return null;
+    }
+
     public static Dish getNew() {
         return new Dish(null, "Новое блюдо", new BigDecimal("1934.00"), LocalDate.now(), wingstop);
     }

@@ -34,7 +34,7 @@ VALUES (1, 1, '2022-03-10'),
 
 
 
-INSERT INTO DISHES(name, price, creation_date, restaurant_id)
+INSERT INTO DISHES(name, price, entry_date, restaurant_id)
 VALUES ('Блинчики', 7443.0, '2022-03-10', 1),
        ('Оладушки', 4312.0, '2022-03-10', 3),
        ('Чашечка чая', 1432.0, '2022-03-10', 4),

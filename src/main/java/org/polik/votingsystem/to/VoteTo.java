@@ -1,8 +1,10 @@
 package org.polik.votingsystem.to;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
 import java.beans.ConstructorProperties;
 import java.time.LocalDate;
 
@@ -12,14 +14,14 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 @Value
 public class VoteTo extends BaseTo {
-    String restaurant;
-    int restaurantId;
+    @NotNull
+    Integer restaurantId;
     LocalDate voteDate;
 
-    @ConstructorProperties({"id", "restaurant", "restaurantId", "voteDate"})
-    public VoteTo(int id, String restaurant, int restaurantId, LocalDate voteDate) {
+    @Builder
+    @ConstructorProperties({"id", "restaurantId", "voteDate"})
+    public VoteTo(Integer id, Integer restaurantId, LocalDate voteDate) {
         super(id);
-        this.restaurant = restaurant;
         this.restaurantId = restaurantId;
         this.voteDate = voteDate;
     }

@@ -3,25 +3,22 @@ package org.polik.votingsystem.repository;
 import org.polik.votingsystem.model.Restaurant;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Created by Polik on 3/11/2022
  */
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
-    @Query("from Restaurant r left join r.votes v on v.voteDate=current_date")
-    @EntityGraph(value = "votes")
-    Set<Restaurant> findAllForCurrentDate();
+    @EntityGraph("dishes")
+    @Query("from Restaurant r left join r.dishes d on (?1 is null or d.entryDate=?1) order by r.name")
+    List<Restaurant> findAll(@Nullable LocalDate date);
 
-    @Query("from Restaurant r left join r.votes v on v.voteDate=?1")
-    @EntityGraph(value = "votes")
-    Set<Restaurant> findAllByDate(LocalDate date);
-
-    @EntityGraph(value = "votes")
+    @EntityGraph("dishes")
     Optional<Restaurant> findById(int id);
 }

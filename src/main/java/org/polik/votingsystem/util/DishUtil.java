@@ -1,7 +1,6 @@
 package org.polik.votingsystem.util;
 
 import lombok.experimental.UtilityClass;
-import org.polik.votingsystem.error.IllegalRequestDataException;
 import org.polik.votingsystem.model.Dish;
 import org.polik.votingsystem.model.Restaurant;
 import org.polik.votingsystem.to.DishTo;
@@ -25,15 +24,8 @@ public class DishUtil {
                 dish.getId(),
                 dish.getName(),
                 dish.getPrice(),
-                dish.getRestaurant().getId()
-        );
-    }
-
-    public static Dish fromTo(DishTo dishTo) {
-        return new Dish(
-                dishTo.getId(),
-                dishTo.getName(),
-                dishTo.getPrice()
+                dish.getRestaurant().getId(),
+                dish.getEntryDate()
         );
     }
 
@@ -42,19 +34,8 @@ public class DishUtil {
                 dishTo.getId(),
                 dishTo.getName(),
                 dishTo.getPrice(),
+                dishTo.getEntryDate(),
                 restaurant
         );
-    }
-
-    public static List<Dish> prepareToSave(List<Dish> dishes, Restaurant restaurant) {
-        return dishes.stream()
-                .map(el -> {
-                    if (el.isNew()) {
-                        el.setRestaurant(restaurant);
-                        return el;
-                    } else {
-                        throw new IllegalRequestDataException(el.getClass().getSimpleName() + " must be new (id=null)");
-                    }
-                }).toList();
     }
 }

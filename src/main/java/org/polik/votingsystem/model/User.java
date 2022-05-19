@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.polik.votingsystem.HasIdAndEmail;
 import org.polik.votingsystem.util.validation.NoHtml;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,6 +14,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,8 +26,7 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     @Serial
@@ -72,4 +74,10 @@ public class User extends NamedEntity implements HasIdAndEmail, Serializable {
     public User(User u) {
         this(u.getId(), u.getName(), u.getPassword(), u.getEmail(), u.getRoles());
     }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
+
+
 }

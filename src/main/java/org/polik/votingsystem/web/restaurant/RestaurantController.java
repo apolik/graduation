@@ -1,14 +1,12 @@
 package org.polik.votingsystem.web.restaurant;
 
-import org.polik.votingsystem.to.RestaurantTo;
+import org.polik.votingsystem.model.Restaurant;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -20,16 +18,15 @@ import java.util.List;
 public class RestaurantController extends AbstractRestaurantController {
     public static final String REST_URL = "/api/restaurants";
 
-    @Override
     @GetMapping
     @Cacheable
-    public List<RestaurantTo> getAll() {
-        return super.getAll();
+    public List<Restaurant> getAll(@RequestParam(required = false) LocalDate date) {
+        return super.getAll(date);
     }
 
     @Override
     @GetMapping("/{id}")
-    public RestaurantTo get(@PathVariable int id) {
+    public Restaurant get(@PathVariable int id) {
         return super.get(id);
     }
 }

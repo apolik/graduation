@@ -2,6 +2,7 @@ package org.polik.votingsystem.repository;
 
 import org.polik.votingsystem.model.Dish;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -12,14 +13,6 @@ import java.util.List;
  */
 @Transactional(readOnly = true)
 public interface DishRepository extends BaseRepository<Dish> {
-
-    @Query("from Dish d where d.creationDate=current_date")
-    List<Dish> findAllForToday();
-
-    @Query("from Dish d where d.creationDate=current_date and d.restaurant.id=?1")
-    List<Dish> findAllForTodayByRestaurantId(int restaurantId);
-
-    List<Dish> findAllByCreationDate(LocalDate date);
-
-    List<Dish> findAllByCreationDateAndRestaurantId(LocalDate date, int restaurantId);
+    @Query("from Dish d where (:date is null or d.entryDate=:date) and (:restaurantId is null or d.restaurant.id=:restaurantId)")
+    List<Dish> findAll(@Nullable Integer restaurantId, @Nullable LocalDate date);
 }
