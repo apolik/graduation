@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.model.User;
@@ -32,6 +33,7 @@ import static org.polik.votingsystem.util.validation.ValidationUtil.checkNew;
 @RestController
 @CacheConfig(cacheNames = "users")
 @RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Admin User Controller")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = ErrorInfo.class))) ,
         @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))

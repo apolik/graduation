@@ -21,9 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by Polik on 4/23/2022
  */
-class VoteControllerTest extends AbstractControllerTest {
+class VoteProfileControllerTest extends AbstractControllerTest {
 
-    static final String REST_URL = VoteController.REST_URL + "/";
+    static final String REST_URL = VoteProfileController.REST_URL + "/";
     static final LocalTime BEFORE_DEADLINE = DEADLINE_FOR_REVOTING.minusSeconds(1);
     static final LocalTime AFTER_DEADLINE = DEADLINE_FOR_REVOTING.plusSeconds(1);
 

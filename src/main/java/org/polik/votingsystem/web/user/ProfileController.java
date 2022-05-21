@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.model.User;
@@ -31,6 +32,7 @@ import static org.polik.votingsystem.util.validation.ValidationUtil.checkNew;
  */
 @RestController
 @RequestMapping(value = ProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Profile User Controller")
 @Slf4j
 @CacheConfig(cacheNames = "users")
 public class ProfileController extends AbstractUserController {

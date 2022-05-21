@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.model.Dish;
 import org.polik.votingsystem.to.DishTo;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @CacheConfig(cacheNames = "dishes")
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Dish Controller")
 @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
 public class DishController extends AbstractDishController {
     public static final String REST_URL = "/api/dishes";

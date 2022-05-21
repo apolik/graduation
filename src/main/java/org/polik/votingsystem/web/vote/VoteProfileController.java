@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.polik.votingsystem.error.DuplicateException;
@@ -41,9 +42,10 @@ import static org.polik.votingsystem.web.GlobalExceptionHandler.EXCEPTION_EXPIRE
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = VoteProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Vote Profile Controller")
 @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
-public class VoteController {
+public class VoteProfileController {
     public static final String REST_URL = "/api/profile/voting";
 
     private VoteRepository repository;
@@ -54,7 +56,7 @@ public class VoteController {
     @Operation(description = "Returns All Votes For Current User", responses = {
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
     })
-    public List<VoteTo> getAll(@AuthenticationPrincipal AuthorizedUser authUser) {
+    public List<VoteTo> getAll(@AuthenticationPrincipal AuthorizedUser authUser) { 
         log.info("getAll");
         int userId = authUser.id();
         return getTos(repository.findAll(userId));
