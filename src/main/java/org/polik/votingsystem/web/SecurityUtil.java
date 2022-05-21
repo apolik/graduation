@@ -1,7 +1,6 @@
 package org.polik.votingsystem.web;
 
 import lombok.experimental.UtilityClass;
-import org.polik.votingsystem.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -25,11 +24,7 @@ public class SecurityUtil {
         return requireNonNull(safeGet(), "No authorized user found");
     }
 
-    public static User authUser() {
-        return get().getUser();
-    }
-
     public static int authId() {
-        return get().getUser().id();
+        return get().id();
     }
 }

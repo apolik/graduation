@@ -1,5 +1,11 @@
 package org.polik.votingsystem.web.restaurant;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.model.Restaurant;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,12 +26,20 @@ import static org.polik.votingsystem.util.validation.ValidationUtil.checkNew;
 @RestController
 @CacheConfig(cacheNames = "restaurants")
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@ApiResponses(value = {
+        @ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = ErrorInfo.class))),
+        @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
+})
 public class AdminRestaurantController extends AbstractRestaurantController {
     public static final String REST_URL = "/api/admin/restaurants";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(description = "Creates a New Restaurant", responses = {
+            @ApiResponse(responseCode = "201", description = "CREATED"),
+            @ApiResponse(responseCode = "422", description = "UNPROCESSABLE ENTITY", content = @Content(schema = @Schema(implementation = ErrorInfo.class))),
+    })
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
         checkNew(restaurant);
         Restaurant created = super.create(restaurant);
@@ -40,6 +54,10 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(description = "Updates Restaurant", responses = {
+            @ApiResponse(responseCode = "204", description = "NO CONTENT"),
+            @ApiResponse(responseCode = "422", description = "UNPROCESSABLE ENTITY", content = @Content(schema = @Schema(implementation = ErrorInfo.class))),
+    })
     public void update(@RequestBody @Valid Restaurant restaurant,
                        @PathVariable int id) {
         super.update(restaurant, id);
@@ -48,6 +66,10 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(description = "Deletes Restaurant By Id", responses = {
+            @ApiResponse(responseCode = "204", description = "NO CONTENT"),
+            @ApiResponse(responseCode = "422", description = "UNPROCESSABLE ENTITY", content = @Content(schema = @Schema(implementation = ErrorInfo.class))),
+    })
     public void delete(@PathVariable int id) {
         super.delete(id);
     }

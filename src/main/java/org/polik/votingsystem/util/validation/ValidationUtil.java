@@ -11,7 +11,6 @@ import org.springframework.lang.NonNull;
  */
 @UtilityClass
 public class ValidationUtil {
-
     public static void assureIdConsistent(HasId entity, int id) {
         if (entity.isNew()) {
             entity.setId(id);
@@ -32,9 +31,13 @@ public class ValidationUtil {
         return rootCause != null ? rootCause : t;
     }
 
-    public static void checkModification(int count, int id) {
+    public static void checkModification(int count, String message) {
         if (count == 0) {
-            throw new IllegalRequestDataException("Entity with id=" + id + " not found");
+            throw new IllegalRequestDataException(message);
         }
+    }
+
+    public static void checkModification(int count, int id) {
+        checkModification(count, "Entity with id=" + id + " not found");
     }
 }

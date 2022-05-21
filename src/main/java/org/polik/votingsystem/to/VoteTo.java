@@ -1,5 +1,6 @@
 package org.polik.votingsystem.to;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -16,6 +17,8 @@ import java.time.LocalDate;
 public class VoteTo extends BaseTo {
     @NotNull
     Integer restaurantId;
+
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     LocalDate voteDate;
 
     @Builder
