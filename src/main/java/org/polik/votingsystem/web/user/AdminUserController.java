@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.model.User;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -73,7 +72,6 @@ public class AdminUserController extends AbstractUserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    @CacheEvict(allEntries = true)
     @Operation(description = "Creates a New User", responses = {
             @ApiResponse(responseCode = "201", description = "CREATED"),
             @ApiResponse(responseCode = "422", description = "UNPROCESSABLE ENTITY", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
@@ -90,7 +88,6 @@ public class AdminUserController extends AbstractUserController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CacheEvict(allEntries = true)
     @Operation(description = "Updates a User", responses = {
             @ApiResponse(responseCode = "204", description = "NO CONTENT"),
             @ApiResponse(responseCode = "422", description = "UNPROCESSABLE ENTITY", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
@@ -114,7 +111,6 @@ public class AdminUserController extends AbstractUserController {
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @CacheEvict(allEntries = true)
     @Operation(description = "Enables/Disables a User", responses = {
             @ApiResponse(responseCode = "204", description = "NO CONTENT"),
             @ApiResponse(responseCode = "422", description = "UNPROCESSABLE ENTITY", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))

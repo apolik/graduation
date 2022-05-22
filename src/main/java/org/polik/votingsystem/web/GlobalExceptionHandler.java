@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.polik.votingsystem.error.AppException;
+import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.util.validation.ValidationUtil;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.M
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
-    public static final String EXCEPTION_DUPLICATE_VOTE = "You cannot vote more than once a day";
+    public static final String EXCEPTION_INTEGRITY = "Data integrity error";
     public static final String EXCEPTION_EXPIRED_TIME = String.format("You cannot change your mind after %s", DEADLINE_FOR_REVOTING);
 
     private final ErrorAttributes errorAttributes;
@@ -70,6 +72,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> appException(WebRequest request, AppException ex) {
         log.error("ApplicationException: {}", ex.getMessage());
         return createResponseEntity(getDefaultBody(request, ex.getOptions(), null), ex.getStatus());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorInfo> integrityException(WebRequest request, DataIntegrityViolationException ex) {
+        log.error("DataIntegrityViolationException: {}", ex.getMessage());
+        return createResponseEntity(getDefaultBody(request, ErrorAttributeOptions.of(MESSAGE), EXCEPTION_INTEGRITY), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

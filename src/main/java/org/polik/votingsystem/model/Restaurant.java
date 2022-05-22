@@ -8,7 +8,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,7 +29,7 @@ public class Restaurant extends NamedEntity implements Serializable {
             cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
-    private Set<Dish> dishes = new HashSet<>();
+    private Set<Dish> dishes;
 
     public Restaurant(Integer id, String name, Set<Dish> dishes) {
         super(id, name);

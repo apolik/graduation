@@ -8,8 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.model.Dish;
 import org.polik.votingsystem.to.DishTo;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +18,6 @@ import java.util.List;
  * Created by Polik on 3/29/2022
  */
 @RestController
-@CacheConfig(cacheNames = "dishes")
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Dish Controller")
 @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
@@ -28,7 +25,6 @@ public class DishController extends AbstractDishController {
     public static final String REST_URL = "/api/dishes";
 
     @GetMapping
-    @Cacheable
     @Operation(description = "Returns All Dishes", responses = {
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
     })

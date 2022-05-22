@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.model.Restaurant;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +35,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     public static final String REST_URL = "/api/admin/restaurants";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(description = "Creates a New Restaurant", responses = {
             @ApiResponse(responseCode = "201", description = "CREATED"),
@@ -53,7 +51,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @CacheEvict(allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(description = "Updates Restaurant", responses = {
             @ApiResponse(responseCode = "204", description = "NO CONTENT"),

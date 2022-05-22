@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.polik.votingsystem.error.DuplicateException;
 import org.polik.votingsystem.error.ErrorInfo;
 import org.polik.votingsystem.error.ExpiredTimeException;
 import org.polik.votingsystem.model.Restaurant;
@@ -17,7 +16,6 @@ import org.polik.votingsystem.repository.VoteRepository;
 import org.polik.votingsystem.to.VoteTo;
 import org.polik.votingsystem.util.DateTimeUtil;
 import org.polik.votingsystem.web.AuthorizedUser;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,15 +31,14 @@ import java.util.List;
 
 import static org.polik.votingsystem.util.Util.safeGet;
 import static org.polik.votingsystem.util.VoteUtil.getTos;
-import static org.polik.votingsystem.web.GlobalExceptionHandler.EXCEPTION_DUPLICATE_VOTE;
 import static org.polik.votingsystem.web.GlobalExceptionHandler.EXCEPTION_EXPIRED_TIME;
 
 /**
  * Created by Polik on 3/29/2022
  */
+@Slf4j
 @RestController
 @AllArgsConstructor
-@Slf4j
 @RequestMapping(value = VoteProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Vote Profile Controller")
 @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
@@ -56,7 +53,7 @@ public class VoteProfileController {
     @Operation(description = "Returns All Votes For Current User", responses = {
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
     })
-    public List<VoteTo> getAll(@AuthenticationPrincipal AuthorizedUser authUser) { 
+    public List<VoteTo> getAll(@AuthenticationPrincipal AuthorizedUser authUser) {
         log.info("getAll");
         int userId = authUser.id();
         return getTos(repository.findAll(userId));
@@ -71,21 +68,17 @@ public class VoteProfileController {
     })
     public ResponseEntity<Vote> createWithLocation(@RequestBody @Valid VoteTo voteTo,
                                                    @AuthenticationPrincipal AuthorizedUser authUser) {
-        try {
-            log.info("create {}", voteTo);
-            Vote created = repository.save(new Vote(
-                    authUser.getUser(),
-                    getRestaurant(voteTo.getRestaurantId())
-            ));
+        log.info("create {}", voteTo);
+        Vote created = repository.save(new Vote(
+                authUser.getUser(),
+                getRestaurant(voteTo.getRestaurantId())
+        ));
 
-            URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path(REST_URL + "/{id}")
-                    .buildAndExpand(created.getId()).toUri();
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
 
-            return ResponseEntity.created(uriOfNewResource).body(created);
-        } catch (DataIntegrityViolationException ex) {
-            throw new DuplicateException(EXCEPTION_DUPLICATE_VOTE);
-        }
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @GetMapping("/{id}")

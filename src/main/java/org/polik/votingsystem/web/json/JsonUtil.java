@@ -16,7 +16,6 @@ import static org.polik.votingsystem.web.json.JacksonObjectMapper.getMapper;
  */
 @UtilityClass
 public class JsonUtil {
-
     public static <T> List<T> readValues(String json, Class<T> clazz) {
         ObjectReader reader = getMapper().readerFor(clazz);
         try {

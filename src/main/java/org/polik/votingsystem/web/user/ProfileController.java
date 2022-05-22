@@ -11,8 +11,6 @@ import org.polik.votingsystem.model.User;
 import org.polik.votingsystem.to.UserTo;
 import org.polik.votingsystem.util.UserUtil;
 import org.polik.votingsystem.web.AuthorizedUser;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +32,6 @@ import static org.polik.votingsystem.util.validation.ValidationUtil.checkNew;
 @RequestMapping(value = ProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Profile User Controller")
 @Slf4j
-@CacheConfig(cacheNames = "users")
 public class ProfileController extends AbstractUserController {
     public static final String REST_URL = "/api/profile";
 
@@ -59,7 +56,6 @@ public class ProfileController extends AbstractUserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    @CacheEvict(allEntries = true)
     @Operation(description = "Registers a New User", responses = {
             @ApiResponse(responseCode = "201", description = "CREATED"),
             @ApiResponse(responseCode = "422", description = "UNPROCESSABLE ENTITY", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
@@ -69,12 +65,12 @@ public class ProfileController extends AbstractUserController {
         checkNew(userTo);
         User created = prepareAndSave(UserUtil.createNewFromTo(userTo));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL).build().toUri();
+                .path(REST_URL)
+                .build().toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @Transactional
-    @CacheEvict(allEntries = true)
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(description = "Deletes a User", responses = {
