@@ -1,6 +1,7 @@
 package org.polik.votingsystem.web.restaurant;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -41,17 +42,9 @@ public class RestaurantController extends AbstractRestaurantController {
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
-    public Restaurant getWithDishes(@PathVariable int id, @Nullable LocalDate date) {
+    public Restaurant getWithDishes(@PathVariable int id,
+                                    @Parameter(description = "the date when the dishes are on the menu in ISO format (yyyy-mm-dd). today by default") @Nullable LocalDate date) {
         return super.getWithDishes(id, date);
-    }
-
-    @GetMapping("/{id}/with-dishes-for-today")
-    @Operation(description = "Returns a Restaurant By Id With Today's Dishes", responses = {
-            @ApiResponse(responseCode = "200", description = "SUCCESS"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND")
-    })
-    public Restaurant getWithDishesForToday(@PathVariable int id) {
-        return super.getWithDishesForToday(id);
     }
 
     @Override

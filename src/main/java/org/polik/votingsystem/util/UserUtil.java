@@ -1,6 +1,7 @@
 package org.polik.votingsystem.util;
 
 import lombok.experimental.UtilityClass;
+import org.polik.votingsystem.error.IllegalRequestDataException;
 import org.polik.votingsystem.model.Role;
 import org.polik.votingsystem.model.User;
 import org.polik.votingsystem.to.UserTo;
@@ -29,5 +30,11 @@ public class UserUtil {
         user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
         user.setEmail(user.getEmail().toLowerCase());
         return user;
+    }
+
+    public static void checkModification(int count, String email) {
+        if (count == 0) {
+            throw new IllegalRequestDataException("User with email=" + email + " not found");
+        }
     }
 }

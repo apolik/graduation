@@ -51,7 +51,8 @@ public class ProfileController extends AbstractUserController {
             @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(implementation = ErrorInfo.class)))
     })
     public void delete(@AuthenticationPrincipal AuthorizedUser authUser) {
-        super.delete(authUser.id());
+        var email = authUser.getUser().getEmail();
+        super.delete(email);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

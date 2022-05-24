@@ -18,8 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
-import static org.polik.votingsystem.util.validation.ValidationUtil.checkNew;
-
 /**
  * Created by Polik on 4/7/2022
  */
@@ -41,7 +39,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
             @ApiResponse(responseCode = "422", description = "UNPROCESSABLE ENTITY", content = @Content(schema = @Schema(implementation = ErrorInfo.class))),
     })
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
-        checkNew(restaurant);
         Restaurant created = super.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(RestaurantController.REST_URL + "/{id}")

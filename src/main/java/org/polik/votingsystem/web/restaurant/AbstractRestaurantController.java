@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.polik.votingsystem.util.RestaurantUtil.getTos;
 import static org.polik.votingsystem.util.Util.safeGet;
@@ -27,14 +28,12 @@ public abstract class AbstractRestaurantController {
         return getTos(repository.findAll());
     }
 
-    public Restaurant getWithDishesForToday(int id) {
-        log.info("getWithDishesForToday {}", id);
-        return safeGet(repository.getWithDishesForToday(id), id);
-    }
-
     public Restaurant getWithDishes(int id, @Nullable LocalDate date) {
         log.info("getAllWithDishes {} for date {}", id, date);
-        return safeGet(repository.getWithDishes(id, date), id);
+        Optional<Restaurant> result = date == null ?
+                repository.getWithDishesForToday(id) :
+                repository.getWithDishes(id, date);
+        return safeGet(result, id);
     }
 
     public Restaurant get(int id) {

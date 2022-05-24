@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import static org.polik.votingsystem.util.UserUtil.checkModification;
+
 /**
  * Created by Polik on 4/15/2022
  */
@@ -33,6 +35,11 @@ public abstract class AbstractUserController {
     public void delete(int id) {
         log.info("delete {}", id);
         repository.deleteExisted(id);
+    }
+
+    public void delete(String email) {
+        log.info("delete {}", email);
+        checkModification(repository.deleteByEmail(email), email);
     }
 
     protected User prepareAndSave(User user) {
