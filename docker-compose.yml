@@ -3,7 +3,7 @@ version: "3.3"
 services:
   voting-system:
     container_name: voting-system
-    image: dsafdsfadafs/voting-system:1.3
+    image: dsafdsfadafs/voting-system:1.5
     ports:
       - "8080:8080"
     environment:

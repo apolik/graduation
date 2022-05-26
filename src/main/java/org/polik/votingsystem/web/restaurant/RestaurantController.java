@@ -37,17 +37,17 @@ public class RestaurantController extends AbstractRestaurantController {
         return super.getAll();
     }
 
+    // Вдохновился работой delivery club.
     @GetMapping("/{id}/with-dishes")
     @Operation(description = "Returns a Restaurant By Id With Dishes", responses = {
             @ApiResponse(responseCode = "200", description = "SUCCESS"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND")
     })
     public Restaurant getWithDishes(@PathVariable int id,
-                                    @Parameter(description = "the date when the dishes are on the menu in ISO format (yyyy-mm-dd). today by default") @Nullable LocalDate date) {
+                                    @Parameter(description = "the date when the dishes are on the menu in ISO format (YYYY-MM-DD). today by default") @Nullable LocalDate date) {
         return super.getWithDishes(id, date);
     }
 
-    @Override
     @GetMapping("/{id}")
     @Operation(description = "Returns a Restaurant By Id", responses = {
             @ApiResponse(responseCode = "200", description = "SUCCESS"),

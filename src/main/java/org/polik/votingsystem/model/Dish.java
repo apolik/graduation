@@ -18,7 +18,7 @@ import java.time.LocalDate;
  * Created by Polik on 3/11/2022
  */
 @Entity
-@Table(name = "dishes")
+@Table(name = "dishes", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "entry_date"}, name = "unique_name_per_date_idx"))
 @Getter
 @Setter
 @ToString(callSuper = true, exclude = {"restaurant"})
